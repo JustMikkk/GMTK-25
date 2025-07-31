@@ -5,8 +5,9 @@ using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
-public class CubesManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     // input
     [SerializeField] private InputActionAsset _inputActions;
@@ -31,6 +32,7 @@ public class CubesManager : MonoBehaviour
     
     // cubes
     [Header("Cubes")]
+    [SerializeField] private Transform _gameHolder;
     [SerializeField] private GameObject _newPrefab;
     [SerializeField] private List<CubesHolder> _cubesHolders;
     private List<CubeBasic> _cubes;
@@ -75,13 +77,19 @@ public class CubesManager : MonoBehaviour
 
         _currentCube = _cubes[_currentCubeIndex];
         _currentCube.Select(true);
+
+        _gameHolder.localScale = Vector3.one * 0.01f;
+        _gameHolder.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
     }
 
 
     void Update() {
         if (_moveAction.IsPressed()) {
             Vector2 direction = _moveAction.ReadValue<Vector2>();
-            if (_currentCube.MoveInDir(direction)) {                
+            if (direction.x != 0 && direction.y != 0) {
+                direction = direction.x > direction.y ? new Vector2(direction.x, 0) : new Vector2(0, direction.y);
+            }
+            if (_currentCube.MoveInDir(direction.normalized)) {                
                 _moves[_currentCubeIndex].Add(direction);
             }
         }
@@ -89,37 +97,61 @@ public class CubesManager : MonoBehaviour
         if (_switchCubeAction.WasPressedThisFrame()) {
             _isZooming = false;
 
-            _currentCube.Select(false);
-            _currentCubeIndex++;
-            if (_currentCubeIndex == _cubes.Count) _currentCubeIndex = 0;
-
-            _currentCube = _cubes[_currentCubeIndex];
-            _currentCube.Select(true);
-        }
-
-        if (_switchCameraAction.WasPressedThisFrame()) {
-            _isVideoCamera = !_isVideoCamera;
-
-            if (_isVideoCamera) {
-                _videoCamera.Priority = 20;
-                _overviewCamera.Priority = 10;
-                _currentCube.Select(false);
-            } else {
-                _overviewCamera.Priority = 20;
-                _videoCamera.Priority = 10;
-                _currentCube.Select(true);
-            }
+            
         }
 
         if (_zoomInAction.WasPressedThisFrame()) {
-            _isZooming = true;
-            StartCoroutine(ZoomIn());
+            
         }
     }
 
 
-    private IEnumerator ZoomIn()
-    {
+    public void Appear() {
+        _gameHolder.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        _gameHolder.DOScale(Vector3.one, 2).SetEase(Ease.OutBack).SetDelay(0.3f);
+        _gameHolder.DORotate(Vector3.zero, 2, RotateMode.FastBeyond360).SetEase(Ease.OutBack).SetDelay(0.3f);
+    }
+
+
+    public void SwitchCamera(bool isVideo) {
+        _isVideoCamera = isVideo;
+
+        if (_isVideoCamera) {
+            _videoCamera.Priority = 20;
+            _overviewCamera.Priority = 10;
+            _currentCube.Select(false);
+        } else {
+            _overviewCamera.Priority = 20;
+            _videoCamera.Priority = 10;
+            _currentCube.Select(true);
+        }
+    }
+
+
+    public void SwitchCube(bool isNext) {
+        _currentCube.Select(false);
+
+        if (isNext) {
+            _currentCubeIndex++;
+            if (_currentCubeIndex == _cubes.Count) _currentCubeIndex = 0;
+        } else {
+            _currentCubeIndex--;
+            if (_currentCubeIndex == -1) _currentCubeIndex = _cubes.Count() -1;
+        }
+
+        _currentCube = _cubes[_currentCubeIndex];
+        _currentCube.Select(true);
+    }
+
+
+    public void Zoom(bool doZoomIn) {
+        _isZooming = doZoomIn;
+
+        if (_isZooming) StartCoroutine(zoomIn());
+    }
+
+
+    private IEnumerator zoomIn() {
         foreach (CubeBasic cube in _cubes) {
             cube.MakeKinematic();
         }
@@ -166,9 +198,9 @@ public class CubesManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         if (_isZooming)
-            yield return ZoomIn();
-
+            yield return zoomIn();
     }
+
 
     private int getLongestMove() {
         int biggest = _moves[0].Count();

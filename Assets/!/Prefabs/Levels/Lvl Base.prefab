@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8233118421974604264}
+  - component: {fileID: 7404099525965196693}
   m_Layer: 0
   m_Name: Lvl Base
   m_TagString: Untagged
@@ -30,13 +31,71 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4169989251230438379}
-  - {fileID: 4799239044124444367}
-  - {fileID: 173036271535650795}
-  - {fileID: 8036293990978935324}
-  - {fileID: 3369849608093606631}
+  - {fileID: 1416809411399137714}
   - {fileID: 7267384256885550080}
   - {fileID: 6561329754549810147}
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7404099525965196693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 114556056350890148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98356664535ffb3e5b328d364f95a820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  _videoCamera: {fileID: 3211011931454577801}
+  _overviewCamera: {fileID: 8446778221672035575}
+  _zoomAmount: 3
+  _nextYPositions:
+  - -13
+  - -4
+  - -1
+  - 0
+  _gameHolder: {fileID: 1416809411399137714}
+  _newPrefab: {fileID: 2394782430485342415, guid: 5babb22b38648191cb1bcad802422511, type: 3}
+  _cubesHolders:
+  - {fileID: 2850106284171999512}
+  - {fileID: 7649091080342607119}
+  - {fileID: 4618253277940224965}
+--- !u!1 &2968831583928839146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1416809411399137714}
+  m_Layer: 0
+  m_Name: GameHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1416809411399137714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2968831583928839146}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 173036271535650795}
+  - {fileID: 8036293990978935324}
+  - {fileID: 3369849608093606631}
+  m_Father: {fileID: 8233118421974604264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3352648121979543321
 GameObject:
@@ -127,64 +186,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LookAtOffset: {x: 0, y: 0, z: 0}
---- !u!1 &4570682427717977006
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4799239044124444367}
-  - component: {fileID: 8935474060734304013}
-  m_Layer: 0
-  m_Name: CubesManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4799239044124444367
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4570682427717977006}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8233118421974604264}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8935474060734304013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4570682427717977006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98356664535ffb3e5b328d364f95a820, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _videoCamera: {fileID: 3211011931454577801}
-  _overviewCamera: {fileID: 8446778221672035575}
-  _zoomAmount: 3
-  _nextYPositions:
-  - -13
-  - -4
-  - -1
-  - 0
-  _newPrefab: {fileID: 2394782430485342415, guid: 5babb22b38648191cb1bcad802422511, type: 3}
-  _cubesHolders:
-  - {fileID: 2850106284171999512}
-  - {fileID: 7649091080342607119}
-  - {fileID: 4618253277940224965}
 --- !u!1 &4648946657097905516
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +216,7 @@ Transform:
   m_LocalScale: {x: 9, y: 9, z: 9}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 8233118421974604264}
+  m_Father: {fileID: 1416809411399137714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2850106284171999512
 MonoBehaviour:
@@ -369,7 +370,7 @@ Transform:
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 8233118421974604264}
+  m_Father: {fileID: 1416809411399137714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7649091080342607119
 MonoBehaviour:
@@ -465,7 +466,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 8233118421974604264}
+    m_TransformParent: {fileID: 1416809411399137714}
     m_Modifications:
     - target: {fileID: 735875123563840381, guid: 5babb22b38648191cb1bcad802422511, type: 3}
       propertyPath: m_LocalPosition.x
