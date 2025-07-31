@@ -134,7 +134,7 @@ public class CubesManager : MonoBehaviour
             index++;
         }
 
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(2f);
 
         CubesHolder newCubesHolder = Instantiate(_newPrefab).GetComponent<CubesHolder>();
         _cubesHolders.Add(newCubesHolder);
