@@ -33,17 +33,23 @@ public class CubeBasic : MonoBehaviour
 
         _rotatableMesh.DORotate(new Vector3(dir.y * -90, 0, dir.x * 90), 0.2f, RotateMode.Fast);
 
-        _transform.DOMove(new Vector3(_transform.position.x - dir.x, _transform.position.y, _transform.position.z - dir.y), 0.2f).onComplete += () => {
+        _transform.DOMove(new Vector3(_transform.position.x - dir.x, _transform.position.y, _transform.position.z - dir.y), 0.2f).OnComplete(() => {
             _transform.position = Vector3Int.RoundToInt(_transform.position);
             _isMoving = false;
             _rigidBody.useGravity = true;
             _rotatableMesh.rotation = Quaternion.identity;
-        };
+        });
         return true;
     }
 
     public void Select(bool doSelect) {
         _arrowGO.SetActive(doSelect);
+
+    }
+
+    public void MakeKinematic() {
+        _rigidBody.useGravity = false;
+        _rigidBody.isKinematic = true;
     }
 
 }

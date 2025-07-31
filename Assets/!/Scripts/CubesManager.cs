@@ -8,12 +8,6 @@ using UnityEngine.InputSystem;
 
 public class CubesManager : MonoBehaviour
 {
-    private struct Move {
-        public int cubeIndex;
-        public List<Vector2> direction;
-    }
-
-
     // input
     [SerializeField] private InputActionAsset _inputActions;
     private InputAction _moveAction;
@@ -23,13 +17,21 @@ public class CubesManager : MonoBehaviour
     
     
     // cameras
+    [Header("Cameras")]
     [SerializeField] private CinemachineCamera _videoCamera;
     [SerializeField] private CinemachineCamera _overviewCamera;
+
+
+    // Zoom
+    [Header("Zoom")]
+    [SerializeField] private float _zoomAmount;
+    [SerializeField] private List<float> _nextYPositions;
     private bool _isVideoCamera = false;
     
     
     // cubes
-    [SerializeField] private GameObject _lvl1prefab;
+    [Header("Cubes")]
+    [SerializeField] private GameObject _newPrefab;
     [SerializeField] private List<CubesHolder> _cubesHolders;
     private List<CubeBasic> _cubes;
     private int _currentCubeIndex = 0;
@@ -79,10 +81,7 @@ public class CubesManager : MonoBehaviour
     void Update() {
         if (_moveAction.IsPressed()) {
             Vector2 direction = _moveAction.ReadValue<Vector2>();
-            if (_currentCube.MoveInDir(direction)) {
-                Move move = new Move();
-                move.cubeIndex = _currentCubeIndex;
-                
+            if (_currentCube.MoveInDir(direction)) {                
                 _moves[_currentCubeIndex].Add(direction);
             }
         }
@@ -121,13 +120,23 @@ public class CubesManager : MonoBehaviour
 
     private IEnumerator ZoomIn()
     {
-        foreach (CubesHolder ch in _cubesHolders) {
-            ch.transform.DOScale(new Vector3(ch.transform.localScale.x * 3, 1, ch.transform.localScale.z * 3), 2);
+        foreach (CubeBasic cube in _cubes) {
+            cube.MakeKinematic();
         }
 
-        yield return new WaitForSeconds(2);
+        int index = 0;
+        foreach (CubesHolder ch in _cubesHolders) {
+            ch.ResetCubesPositions();
+            ch.transform.DOMoveY(_nextYPositions[index], 2);
+            ch.transform.DOScale(ch.transform.localScale * _zoomAmount, 2).OnComplete(() => {
+                ch.ResetCubesPositions();
+            });
+            index++;
+        }
 
-        CubesHolder newCubesHolder = Instantiate(_lvl1prefab).GetComponent<CubesHolder>();
+        yield return new WaitForSeconds(0.1f);
+
+        CubesHolder newCubesHolder = Instantiate(_newPrefab).GetComponent<CubesHolder>();
         _cubesHolders.Add(newCubesHolder);
         _cubes = newCubesHolder.cubes;
 
@@ -142,6 +151,7 @@ public class CubesManager : MonoBehaviour
         _cubesHolders.Remove(_cubesHolders.First());
         Destroy(oldCubesHolder.gameObject);
 
+        yield return new WaitForSeconds(2f);
 
         for (int i = 0; i < getLongestMove(); i++) {
             for (int j = 0; j < _cubes.Count(); j++) {
@@ -153,7 +163,7 @@ public class CubesManager : MonoBehaviour
             yield return new WaitForSeconds(0.21f);
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         if (_isZooming)
             yield return ZoomIn();
