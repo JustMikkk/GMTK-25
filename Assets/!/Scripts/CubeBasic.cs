@@ -6,6 +6,8 @@ public class CubeBasic : MonoBehaviour
     [SerializeField] private Transform _rotatableMesh;
     [SerializeField] private GameObject _arrowGO;
 
+    [SerializeField] private Vector3 _moveDir;
+
     private bool _isMoving = false;
 
     private Rigidbody _rigidBody;
@@ -31,14 +33,20 @@ public class CubeBasic : MonoBehaviour
         _isMoving = true;
         _rigidBody.useGravity = false;
 
-        _rotatableMesh.DORotate(new Vector3(dir.y * -90, 0, dir.x * 90), 0.2f, RotateMode.Fast);
+        Vector3 rotationAxis = Vector3.zero;
+        if (dir.x != 0) {
+            rotationAxis = new Vector3(0, 0, dir.x * 90);
+        } else if (dir.y != 0) {
+            rotationAxis = new Vector3(-dir.y * 90, 0, 0);
+        }
 
+        _rotatableMesh.DORotate(rotationAxis, 0.2f, RotateMode.WorldAxisAdd);
         _transform.DOMove(new Vector3(_transform.position.x - dir.x, _transform.position.y, _transform.position.z - dir.y), 0.2f).OnComplete(() => {
             _transform.position = Vector3Int.RoundToInt(_transform.position);
             _isMoving = false;
             _rigidBody.useGravity = true;
-            _rotatableMesh.rotation = Quaternion.identity;
         });
+
         return true;
     }
 
