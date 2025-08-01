@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -14,7 +16,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Other")]
     [SerializeField] private CinemachineCamera _transitionCamera;
-
+    [SerializeField] private TextMeshProUGUI _movesText;
 
 
     private void Awake()  {
@@ -27,6 +29,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
     }
 
+
+#region Level Handling
 
     public void SpawnLevel(int index) {
         spawnLevel(index, false);
@@ -73,6 +77,12 @@ public class GameManager : MonoBehaviour
     public void SetTransitionCamera(bool setCamera) {
         if (setCamera && _transitionCamera.Priority == 100) return;
         _transitionCamera.Priority = setCamera ? 100 : 10;
+    }
+
+#endregion
+
+    public void UpdateMovesText(int count) {
+        _movesText.text = count.ToString();
     }
 
 }

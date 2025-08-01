@@ -50,10 +50,12 @@ public class CubeBasic : MonoBehaviour
         return true;
     }
 
+
     public void Select(bool doSelect) {
         _arrowGO.SetActive(doSelect);
 
     }
+
 
     public void MakeKinematic(bool isKinematic) {
         _rigidBody.useGravity = !isKinematic;

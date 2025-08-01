@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using DG.Tweening;
 using Unity.Cinemachine;
@@ -12,6 +11,13 @@ using UnityEngine.UIElements;
 public class LevelManager : MonoBehaviour
 {
     public UnityEvent levelReadyEvent = new();
+
+
+    public struct CubeMove {
+        public int cubeIndex;
+        public Vector2 direction; 
+    }
+
 
     // input
     [SerializeField] private InputActionAsset _inputActions;
@@ -50,7 +56,7 @@ public class LevelManager : MonoBehaviour
 
 
 
-    private Dictionary<int, List<Vector2>> _moves = new Dictionary<int, List<Vector2>>() {
+    private Dictionary<int, List<Vector2>> movesDict = new Dictionary<int, List<Vector2>>() {
         { 0, new List<Vector2>() },
         { 1, new List<Vector2>() },
         { 2, new List<Vector2>() },
@@ -61,6 +67,9 @@ public class LevelManager : MonoBehaviour
         { 7, new List<Vector2>() },
     };
 
+    private List<CubeMove> _moves = new();
+    
+    
     private bool _isZooming = false;
 
 #region Lifetime Methods
@@ -98,7 +107,12 @@ public class LevelManager : MonoBehaviour
                 direction = direction.x > direction.y ? new Vector2(direction.x, 0) : new Vector2(0, direction.y);
             }
             if (_currentCube.MoveInDir(direction.normalized)) {                
-                _moves[_currentCubeIndex].Add(direction.normalized);
+                movesDict[_currentCubeIndex].Add(direction.normalized);
+                CubeMove move = new();
+                move.cubeIndex = _currentCubeIndex;
+                move.direction = direction;
+                _moves.Add(move);
+                GameManager.instance.UpdateMovesText(_moves.Count());
             }
         }
 
@@ -131,7 +145,7 @@ public class LevelManager : MonoBehaviour
         }
 
         if (_undoAction.WasPressedThisFrame()) {
-
+            UndoMove();
         }
     }
 
@@ -265,15 +279,21 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        for (int i = 0; i < getLongestMove(); i++) {
-            for (int j = 0; j < _cubes.Count(); j++) {
-                if (_moves[j].Count() > i) {
-                    _cubes[j].MoveInDir(_moves[j][i]);
-                }
-            }
-
+        foreach (CubeMove move in _moves) {
+            _cubes[move.cubeIndex].MoveInDir(move.direction);
             yield return new WaitForSeconds(0.21f);
         }
+
+    // moving with all at once
+        // for (int i = 0; i < getLongestMove(); i++) {
+        //     for (int j = 0; j < _cubes.Count(); j++) {
+        //         if (movesDict[j].Count() > i) {
+        //             _cubes[j].MoveInDir(movesDict[j][i]);
+        //         }
+        //     }
+
+        //     yield return new WaitForSeconds(0.21f);
+        // }
 
         yield return new WaitForSeconds(2f);
 
@@ -283,11 +303,11 @@ public class LevelManager : MonoBehaviour
 
 
     private int getLongestMove() {
-        int biggest = _moves[0].Count();
+        int biggest = movesDict[0].Count();
 
         for (int i = 0; i < _moves.Count(); i++) {
-            if (_moves[i].Count() > biggest) {
-                biggest = _moves[i].Count();
+            if (movesDict[i].Count() > biggest) {
+                biggest = movesDict[i].Count();
             }
         }
 
@@ -306,6 +326,24 @@ public class LevelManager : MonoBehaviour
     private void makeCubesNotKinematic() {
         foreach (CubeBasic cube in _cubes) {
             cube.MakeKinematic(false);
+        }
+    }
+
+
+    public void UndoMove() {
+        if (_moves.Count() == 0) {
+            foreach (CubeBasic cube in _cubes) {
+                cube.transform.position += Vector3.up;
+                return;
+            }
+        }
+        CubeMove lastMove = _moves.Last();
+        if (Mathf.RoundToInt(_cubes[lastMove.cubeIndex].gameObject.transform.position.y) == 0) {
+            _cubes[lastMove.cubeIndex].gameObject.transform.position += Vector3.up; 
+        }
+        if (_cubes[lastMove.cubeIndex].MoveInDir(lastMove.direction * -1)) {
+            _moves.Remove(lastMove);
+            GameManager.instance.UpdateMovesText(_moves.Count());
         }
     }
 
