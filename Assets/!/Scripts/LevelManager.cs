@@ -4,11 +4,14 @@ using System.Linq;
 using DG.Tweening;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 public class LevelManager : MonoBehaviour
 {
+    public UnityEvent levelReadyEvent = new();
+
     // input
     [SerializeField] private InputActionAsset _inputActions;
     private InputAction _moveAction;
@@ -101,7 +104,9 @@ public class LevelManager : MonoBehaviour
         _inputActions.FindActionMap("Player").Enable();
         _gameHolder.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
         _gameHolder.DOScale(Vector3.one, 2).SetEase(Ease.InOutSine).SetDelay(delay);
-        _gameHolder.DORotate(Vector3.zero, 2, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).SetDelay(delay);
+        _gameHolder.DORotate(Vector3.zero, 2, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).SetDelay(delay).OnComplete(() => {
+            levelReadyEvent?.Invoke();
+        });
     }
 
 
