@@ -148,8 +148,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4195554677447105076}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.15947607, y: 0.8398341, z: -0.38500926, w: -0.3478707}
-  m_LocalPosition: {x: 6, y: 8.35, z: 6}
+  m_LocalRotation: {x: 0.1464466, y: -0.8535535, z: 0.35355338, w: 0.35355338}
+  m_LocalPosition: {x: 6, y: 9, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -180,7 +180,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60.000004
-    OrthographicSize: 5
+    OrthographicSize: 1
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -456,11 +456,11 @@ MonoBehaviour:
   _videoCamera: {fileID: 4468521175661181595}
   _overviewCamera: {fileID: 976984578511309951}
   _zoomAmount: 5
-  _nextYPositions:
-  - -62
-  - -12
-  - -2
-  - 0
+  _nextPositions:
+  - {x: 0, y: -62, z: 0}
+  - {x: 0, y: -12, z: 0}
+  - {x: 0, y: -2, z: 0}
+  - {x: 0, y: 0, z: 0}
   _gameHolder: {fileID: 1512347782243105182}
   _newPrefab: {fileID: 8477655364387468676, guid: 356c98ba33b914e54b6c79f643448f58, type: 3}
   _cubesHolders:

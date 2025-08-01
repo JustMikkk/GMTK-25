@@ -82,15 +82,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98356664535ffb3e5b328d364f95a820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelReadyEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _videoCamera: {fileID: 1585562853352949996}
   _overviewCamera: {fileID: 6484233745909491394}
   _zoomAmount: 3
-  _nextYPositions:
-  - -13
-  - -4
-  - -1
-  - 0
+  _nextPositions:
+  - {x: 0, y: -13, z: 0}
+  - {x: 0, y: -4, z: 0}
+  - {x: 0, y: -1, z: 0}
+  - {x: 0, y: 0, z: 0}
   _gameHolder: {fileID: 4906984750598167268}
   _newPrefab: {fileID: 2394782430485342415, guid: 5babb22b38648191cb1bcad802422511, type: 3}
   _cubesHolders:

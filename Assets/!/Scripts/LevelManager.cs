@@ -37,7 +37,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Zoom")]
     [SerializeField] private float _zoomAmount;
-    [SerializeField] private List<float> _nextYPositions;
+    [SerializeField] private List<Vector3> _nextPositions;
     private bool _isVideoCamera = false;
     
     
@@ -104,13 +104,14 @@ public class LevelManager : MonoBehaviour
         if (_moveAction.IsPressed()) {
             Vector2 direction = _moveAction.ReadValue<Vector2>();
             if (direction.x != 0 && direction.y != 0) {
-                direction = direction.x > direction.y ? new Vector2(direction.x, 0) : new Vector2(0, direction.y);
+                direction = direction.x > direction.y ? new Vector2(direction.x, 0).normalized : new Vector2(0, direction.y).normalized;
             }
-            if (_currentCube.MoveInDir(direction.normalized)) {                
-                movesDict[_currentCubeIndex].Add(direction.normalized);
-                CubeMove move = new();
-                move.cubeIndex = _currentCubeIndex;
-                move.direction = direction;
+            if (_currentCube.MoveInDir(direction)) {                
+                movesDict[_currentCubeIndex].Add(direction);
+                CubeMove move = new() {
+                    cubeIndex = _currentCubeIndex,
+                    direction = direction
+                };
                 _moves.Add(move);
                 GameManager.instance.UpdateMovesText(_moves.Count());
             }
@@ -252,7 +253,7 @@ public class LevelManager : MonoBehaviour
         int index = 0;
         foreach (CubesHolder ch in _cubesHolders) {
             ch.ResetCubesPositions();
-            ch.transform.DOMoveY(_nextYPositions[index], 2);
+            ch.transform.DOMove(_nextPositions[index], 2);
             ch.transform.DOScale(ch.transform.localScale * _zoomAmount, 2).OnComplete(() => {
                 ch.ResetCubesPositions();
             });
