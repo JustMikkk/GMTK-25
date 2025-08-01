@@ -9,11 +9,6 @@ public class ZoomBtn : MonoBehaviour
 
 
     public void OnClick() {
-        if (GameManager.instance.currentLevel == null) {
-            GameManager.instance.SpawnLevel(1);      
-            return; 
-        }
-
         _isZooming = !_isZooming;
         _text.text = _isZooming ? "Stop" : "Play";
         GameManager.instance.currentLevel.Zoom(_isZooming);

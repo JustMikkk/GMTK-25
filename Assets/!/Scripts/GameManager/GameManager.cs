@@ -22,10 +22,19 @@ public class GameManager : MonoBehaviour
 
 
     public void SpawnLevel(int index) {
-        if (currentLevel != null) Destroy(currentLevel.gameObject);
+        float delay = 0.3f;
+        if (currentLevel != null) {
+            currentLevel.Disappear();
+            delay = 1f;
+        }
         
         currentLevel = Instantiate(_levels[index]).GetComponent<LevelManager>();
-        currentLevel.Appear();
+        currentLevel.Appear(delay);
+    }
+
+
+    public void DespawnLevel() {
+        currentLevel.Disappear();
     }
 
 }

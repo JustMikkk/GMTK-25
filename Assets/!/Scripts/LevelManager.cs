@@ -52,16 +52,7 @@ public class LevelManager : MonoBehaviour
     };
 
     private bool _isZooming = false;
-    
 
-    private void OnEnable() {
-        _inputActions.FindActionMap("Player").Enable();
-    }
-
-
-    private void OnDisable() {
-        _inputActions.FindActionMap("Player").Disable();
-    }
 
 
     private void Awake() {
@@ -79,7 +70,7 @@ public class LevelManager : MonoBehaviour
         _currentCube.Select(true);
 
         _gameHolder.localScale = Vector3.one * 0.01f;
-        _gameHolder.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        _gameHolder.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
     }
 
 
@@ -106,10 +97,23 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    public void Appear() {
+    public void Appear(float delay) {
+        _inputActions.FindActionMap("Player").Enable();
         _gameHolder.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-        _gameHolder.DOScale(Vector3.one, 2).SetEase(Ease.OutBack).SetDelay(0.3f);
-        _gameHolder.DORotate(Vector3.zero, 2, RotateMode.FastBeyond360).SetEase(Ease.OutBack).SetDelay(0.3f);
+        _gameHolder.DOScale(Vector3.one, 2).SetEase(Ease.InOutSine).SetDelay(delay);
+        _gameHolder.DORotate(Vector3.zero, 2, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).SetDelay(delay);
+    }
+
+
+    public void Disappear() {
+        _isZooming = false;
+        StopCoroutine(zoomIn());
+
+        _inputActions.FindActionMap("Player").Disable();
+        _gameHolder.DOScale(Vector3.one * 0.01f, 1).SetEase(Ease.InOutSine);
+        _gameHolder.DORotate(new Vector3(0, -180, 0), 1, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).OnComplete(() => {
+            Destroy(gameObject);
+        });
     }
 
 
@@ -168,7 +172,7 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        CubesHolder newCubesHolder = Instantiate(_newPrefab).GetComponent<CubesHolder>();
+        CubesHolder newCubesHolder = Instantiate(_newPrefab, _gameHolder).GetComponent<CubesHolder>();
         _cubesHolders.Add(newCubesHolder);
         _cubes = newCubesHolder.cubes;
 
