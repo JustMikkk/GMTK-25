@@ -55,9 +55,9 @@ public class CubeBasic : MonoBehaviour
 
     }
 
-    public void MakeKinematic() {
-        _rigidBody.useGravity = false;
-        _rigidBody.isKinematic = true;
+    public void MakeKinematic(bool isKinematic) {
+        _rigidBody.useGravity = !isKinematic;
+        _rigidBody.isKinematic = isKinematic;
     }
 
 }

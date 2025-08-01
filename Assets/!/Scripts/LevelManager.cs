@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using DG.Tweening;
 using Unity.Cinemachine;
@@ -14,26 +15,26 @@ public class LevelManager : MonoBehaviour
 
     // input
     [SerializeField] private InputActionAsset _inputActions;
+    private InputActionMap _inputActionMap;
     private InputAction _moveAction;
-    private InputAction _switchCubeAction;
     private InputAction _switchCameraAction;
-    private InputAction _zoomInAction;
+    private InputAction _nextCubeAction;
+    private InputAction _prevCubeAction;
+    private InputAction _resetAction;
+    private InputAction _undoAction;
     
     
-    // cameras
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera _videoCamera;
     [SerializeField] private CinemachineCamera _overviewCamera;
 
 
-    // Zoom
     [Header("Zoom")]
     [SerializeField] private float _zoomAmount;
     [SerializeField] private List<float> _nextYPositions;
     private bool _isVideoCamera = false;
     
     
-    // cubes
     [Header("Cubes")]
     [SerializeField] private Transform _gameHolder;
     [SerializeField] private GameObject _newPrefab;
@@ -41,6 +42,12 @@ public class LevelManager : MonoBehaviour
     private List<CubeBasic> _cubes;
     private int _currentCubeIndex = 0;
     private CubeBasic _currentCube;
+
+
+    // reset timer
+    private float _resetHoldTime = 2;
+    private float _resetTimer = 0;
+
 
 
     private Dictionary<int, List<Vector2>> _moves = new Dictionary<int, List<Vector2>>() {
@@ -56,13 +63,19 @@ public class LevelManager : MonoBehaviour
 
     private bool _isZooming = false;
 
-
+#region Lifetime Methods
 
     private void Awake() {
+        _inputActionMap = _inputActions.FindActionMap("Player");
+
         _moveAction = InputSystem.actions.FindAction("Move");
-        _switchCubeAction = InputSystem.actions.FindAction("Jump");
-        _switchCameraAction = InputSystem.actions.FindAction("Crouch");
-        _zoomInAction = InputSystem.actions.FindAction("Interact");
+        _switchCameraAction = InputSystem.actions.FindAction("SwitchCamera");
+        _nextCubeAction = InputSystem.actions.FindAction("NextCube");
+        _prevCubeAction = InputSystem.actions.FindAction("PreviousCube");
+        _undoAction = InputSystem.actions.FindAction("Undo");
+        _resetAction = InputSystem.actions.FindAction("Reset");
+
+        _gameHolder.gameObject.SetActive(false);
     }
 
 
@@ -72,54 +85,110 @@ public class LevelManager : MonoBehaviour
         _currentCube = _cubes[_currentCubeIndex];
         _currentCube.Select(true);
 
-        _gameHolder.localScale = Vector3.one * 0.01f;
-        _gameHolder.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
     }
 
 
     void Update() {
+
+        if (!_inputActionMap.enabled) return;
+
         if (_moveAction.IsPressed()) {
             Vector2 direction = _moveAction.ReadValue<Vector2>();
             if (direction.x != 0 && direction.y != 0) {
                 direction = direction.x > direction.y ? new Vector2(direction.x, 0) : new Vector2(0, direction.y);
             }
             if (_currentCube.MoveInDir(direction.normalized)) {                
-                _moves[_currentCubeIndex].Add(direction);
+                _moves[_currentCubeIndex].Add(direction.normalized);
             }
         }
 
-        if (_switchCubeAction.WasPressedThisFrame()) {
-            _isZooming = false;
-
-            
+        if (_switchCameraAction.WasPressedThisFrame()) {
+            SwitchCamera(!_isVideoCamera);
         }
 
-        if (_zoomInAction.WasPressedThisFrame()) {
-            
+        if (_nextCubeAction.WasPressedThisFrame()) {
+            SwitchCube(true);
+        }
+
+        if (_prevCubeAction.WasPressedThisFrame()) {
+            SwitchCube(false);
+        }
+
+        if (_resetAction.IsPressed()) {
+            GameManager.instance.SetTransitionCamera(true);
+            _resetTimer += Time.deltaTime;
+
+            if (_resetTimer >= _resetHoldTime) {
+                _resetTimer = 0;
+                GameManager.instance.ResetLevel();
+            }
+
+        } else {
+            if (_resetTimer > 0) {
+                GameManager.instance.SetTransitionCamera(false);
+                _resetTimer -= Time.deltaTime;
+            }
+        }
+
+        if (_undoAction.WasPressedThisFrame()) {
+
         }
     }
 
+#endregion
+#region Starting / Ending
 
-    public void Appear(float delay) {
-        _inputActions.FindActionMap("Player").Enable();
+    public void AppearNormal(float delay) {
+        _gameHolder.gameObject.SetActive(true);
+        _gameHolder.localScale = Vector3.one * 0.01f;
+        _gameHolder.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
+
+        _inputActionMap.Enable();
         _gameHolder.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
         _gameHolder.DOScale(Vector3.one, 2).SetEase(Ease.InOutSine).SetDelay(delay);
         _gameHolder.DORotate(Vector3.zero, 2, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).SetDelay(delay).OnComplete(() => {
             levelReadyEvent?.Invoke();
+            Invoke(nameof(makeCubesNotKinematic), 1);
         });
     }
 
 
-    public void Disappear() {
+    public void AppearReset(float delay) {
+        _gameHolder.gameObject.SetActive(true);
+        _gameHolder.position = new Vector3(0, -50, 0);
+
+        _inputActionMap.Enable();
+        _gameHolder.DOMoveY(0, 1f).SetEase(Ease.InOutSine).SetDelay(delay).OnComplete(() => {
+            levelReadyEvent?.Invoke();
+            Invoke(nameof(makeCubesNotKinematic), 1);
+        });
+    }
+
+
+    public void DisappearNormal() {
+        _inputActionMap.Disable();
         _isZooming = false;
         StopCoroutine(zoomIn());
 
-        _inputActions.FindActionMap("Player").Disable();
         _gameHolder.DOScale(Vector3.one * 0.01f, 1).SetEase(Ease.InOutSine);
         _gameHolder.DORotate(new Vector3(0, -180, 0), 1, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).OnComplete(() => {
             Destroy(gameObject);
         });
     }
+
+    public void DisappearReset() {
+        _inputActionMap.Disable();
+        _isZooming = false;
+        StopCoroutine(zoomIn());
+
+        _gameHolder.DOMoveY(-50, 1f).SetEase(Ease.InOutSine).OnComplete(() => {
+            Destroy(gameObject);
+        });
+    }
+
+
+#endregion
+#region Switching
 
 
     public void SwitchCamera(bool isVideo) {
@@ -153,6 +222,9 @@ public class LevelManager : MonoBehaviour
     }
 
 
+#endregion
+#region Zooming
+
     public void Zoom(bool doZoomIn) {
         _isZooming = doZoomIn;
 
@@ -161,9 +233,7 @@ public class LevelManager : MonoBehaviour
 
 
     private IEnumerator zoomIn() {
-        foreach (CubeBasic cube in _cubes) {
-            cube.MakeKinematic();
-        }
+        makeCubesKinematic();
 
         int index = 0;
         foreach (CubesHolder ch in _cubesHolders) {
@@ -180,6 +250,7 @@ public class LevelManager : MonoBehaviour
         CubesHolder newCubesHolder = Instantiate(_newPrefab, _gameHolder).GetComponent<CubesHolder>();
         _cubesHolders.Add(newCubesHolder);
         _cubes = newCubesHolder.cubes;
+        makeCubesNotKinematic();
 
         _currentCube.Select(false);
         
@@ -222,4 +293,22 @@ public class LevelManager : MonoBehaviour
 
         return biggest;
     }
+
+#endregion
+#region Help Methods
+
+    private void makeCubesKinematic() {
+        foreach (CubeBasic cube in _cubes) {
+            cube.MakeKinematic(true);
+        }
+    }
+
+    private void makeCubesNotKinematic() {
+        foreach (CubeBasic cube in _cubes) {
+            cube.MakeKinematic(false);
+        }
+    }
+
+#endregion
+
 }

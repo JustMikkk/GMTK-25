@@ -61,11 +61,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8385624562296621225, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8385624562296621225, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
       propertyPath: m_IsKinematic
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8766702768183676479, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
       propertyPath: m_LocalPosition.x

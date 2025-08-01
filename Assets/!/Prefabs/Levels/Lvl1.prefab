@@ -449,6 +449,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98356664535ffb3e5b328d364f95a820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelReadyEvent:
+    m_PersistentCalls:
+      m_Calls: []
   _inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _videoCamera: {fileID: 4468521175661181595}
   _overviewCamera: {fileID: 976984578511309951}

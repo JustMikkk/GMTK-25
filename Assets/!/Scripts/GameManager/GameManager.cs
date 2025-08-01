@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     [Header("Levels")]
     public LevelManager currentLevel;
     [SerializeField] private List<GameObject> _levels;
+    private int _currentLevelIndex = 0;
+
 
     [Header("Other")]
     [SerializeField] private CinemachineCamera _transitionCamera;
@@ -27,28 +29,50 @@ public class GameManager : MonoBehaviour
 
 
     public void SpawnLevel(int index) {
+        spawnLevel(index, false);
+    }
+
+
+    public void ResetLevel() {
+        spawnLevel(_currentLevelIndex, true);
+    }
+
+
+    private void spawnLevel(int index, bool isReset) {
+        _currentLevelIndex = index;
+        
         float delay = 0.3f;
         if (currentLevel != null) {
-            DespawnLevel();
+            despawnLevel(isReset);
             delay = 1f;
         }
         
         currentLevel = Instantiate(_levels[index]).GetComponent<LevelManager>();
-        currentLevel.Appear(delay);
+
+        if (isReset) currentLevel.AppearReset(delay);
+        else currentLevel.AppearNormal(delay);
+
         currentLevel.levelReadyEvent.AddListener(onLevelReady);
     }
 
 
-    public void DespawnLevel() {
-        _transitionCamera.Priority = 100;
+    private void despawnLevel(bool isReset) {
+        SetTransitionCamera(true);
         currentLevel.levelReadyEvent.RemoveListener(onLevelReady);
-        currentLevel.Disappear();
+
+        if (isReset) currentLevel.DisappearReset(); 
+        else currentLevel.DisappearNormal();
     }
 
 
     private void onLevelReady() {
-        _transitionCamera.Priority = 10;
+        SetTransitionCamera(false);
         currentLevel.SwitchCamera(false);
+    }
+
+    public void SetTransitionCamera(bool setCamera) {
+        if (setCamera && _transitionCamera.Priority == 100) return;
+        _transitionCamera.Priority = setCamera ? 100 : 10;
     }
 
 }
