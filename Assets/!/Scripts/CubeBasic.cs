@@ -14,7 +14,7 @@ public class CubeBasic : MonoBehaviour
     [SerializeField] private bool _isMonitoring = false;
     [SerializeField] private Vector3 _moveDir;
 
-    [SerializeField] private Vector3 _raycastOrigin = new Vector3(0, -0.4f, 0);
+    [SerializeField] private List<Vector3> _raycastOrigins = new();
     [SerializeField] private float _raycastLenght = 0.1f;
 
     private List<Vector2> _movesSequence;
@@ -157,12 +157,15 @@ public class CubeBasic : MonoBehaviour
 
     private bool isGrounded() {
 
-        Ray downRay = new Ray(transform.position + _raycastOrigin, Vector3.down);
+        foreach (Vector3 origin in _raycastOrigins) {
+            Ray downRay = new Ray(transform.position + origin, Vector3.down);
 
-        if (Physics.Raycast(downRay, out RaycastHit hit, _raycastLenght)) {
-            // Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.green);
-            return true;
+            if (Physics.Raycast(downRay, out RaycastHit hit, _raycastLenght)) {
+                // Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.green);
+                return true;
+            }
         }
+
 
         // Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.red);
         return false;

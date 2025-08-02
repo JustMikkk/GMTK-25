@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviour
         if (isReset) currentLevel.AppearReset(delay);
         else currentLevel.AppearNormal(delay);
 
+        EventBus.levelStartedEvent?.Invoke();
+
         currentLevel.levelReadyEvent.AddListener(onLevelReady);
     }
 

@@ -1448,8 +1448,14 @@ MonoBehaviour:
       m_Calls: []
   _rotatableMesh: {fileID: 7132428030190695291}
   _arrowGO: {fileID: 4503140985486586263}
+  _isMonitoring: 0
   _moveDir: {x: 0, y: 0, z: 0}
-  _raycastOrigin: {x: 0, y: -0.4, z: 0}
+  _raycastOrigins:
+  - {x: 0, y: -0.4, z: 0}
+  - {x: 0.4, y: -0.4, z: 0.4}
+  - {x: 0.4, y: -0.4, z: -0.4}
+  - {x: -0.4, y: -0.4, z: -0.4}
+  - {x: -0.4, y: -0.4, z: 0.4}
   _raycastLenght: 0.1
 --- !u!54 &2644776930244648049
 Rigidbody:
