@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     [Header("Other")]
     [SerializeField] private CinemachineCamera _transitionCamera;
     [SerializeField] private TextMeshProUGUI _movesText;
+    [SerializeField] private TextMeshProUGUI _cubeIndexText;
+
     private bool _isReseting = false;
 
 
@@ -63,7 +65,9 @@ public class GameManager : MonoBehaviour
         else currentLevel.AppearNormal(delay);
 
         EventBus.levelStartedEvent?.Invoke();
-
+        UpdateMovesText(0);
+        UpdateCubeText(1);
+        
         currentLevel.levelReadyEvent.AddListener(onLevelReady);
     }
 
@@ -91,7 +95,12 @@ public class GameManager : MonoBehaviour
 #endregion
 
     public void UpdateMovesText(int count) {
-        _movesText.text = count.ToString();
+        _movesText.text = "Moves: " + count;
+    }
+
+
+    public void UpdateCubeText(int index) {
+        _cubeIndexText.text = "Cube #" + index;
     }
 
 }

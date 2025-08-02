@@ -232,6 +232,7 @@ public class LevelManager : MonoBehaviour
             if (_currentCubeIndex == -1) _currentCubeIndex = _cubes.Count() -1;
         }
 
+        GameManager.instance.UpdateCubeText(_currentCubeIndex + 1);
         _currentCube = _cubes[_currentCubeIndex];
         _currentCube.Select(true);
     }
