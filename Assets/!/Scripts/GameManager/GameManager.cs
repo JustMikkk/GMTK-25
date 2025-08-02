@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("Other")]
     [SerializeField] private CinemachineCamera _transitionCamera;
     [SerializeField] private TextMeshProUGUI _movesText;
+    private bool _isReseting = false;
 
 
     private void Awake()  {
@@ -38,6 +40,10 @@ public class GameManager : MonoBehaviour
 
 
     public void ResetLevel() {
+        if (_isReseting) return;
+        _isReseting = true;
+        StopAllCoroutines();
+        DOTween.KillAll();
         spawnLevel(_currentLevelIndex, true);
     }
 
@@ -71,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     private void onLevelReady() {
         SetTransitionCamera(false);
+        _isReseting = false;
         currentLevel.SwitchCamera(false);
     }
 
