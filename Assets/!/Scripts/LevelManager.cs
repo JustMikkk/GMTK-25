@@ -300,7 +300,7 @@ public class LevelManager : MonoBehaviour
             _cubes[i].sequenceCompleted.AddListener(() => {
                 cubesReadyCounter++;
             });
-            _cubes[i].MoveFromSequence(movesDict[i]);
+            _cubes[i].MoveFromSequence(movesDict[i], 0.1f * i);
         }
 
 
