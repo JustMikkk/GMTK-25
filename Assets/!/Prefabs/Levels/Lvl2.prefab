@@ -541,6 +541,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubesRing Lvl2
       objectReference: {fileID: 0}
+    - target: {fileID: 7375869192067547105, guid: 53a0e11e6368b069586586ece2ac3bf0, type: 3}
+      propertyPath: _isChecking
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375869192067547105, guid: 53a0e11e6368b069586586ece2ac3bf0, type: 3}
+      propertyPath: _raycastLenght
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7375869192067547105, guid: 53a0e11e6368b069586586ece2ac3bf0, type: 3}
+      propertyPath: _raycastOrigin.y
+      value: -0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8951861293256025113, guid: 53a0e11e6368b069586586ece2ac3bf0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

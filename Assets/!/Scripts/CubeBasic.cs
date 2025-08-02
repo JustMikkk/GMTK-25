@@ -8,6 +8,10 @@ public class CubeBasic : MonoBehaviour
 
     [SerializeField] private Vector3 _moveDir;
 
+    [SerializeField] private bool _isChecking = false;
+    [SerializeField] private Vector3 _raycastOrigin = new Vector3(0, -0.4f, 0);
+    [SerializeField] private float _raycastLenght = 0.1f;
+
     private bool _isMoving = false;
 
     private Rigidbody _rigidBody;
@@ -20,10 +24,17 @@ public class CubeBasic : MonoBehaviour
         _transform = GetComponent<Transform>();
         _audioSource = GetComponent<AudioSource>();
     }
+
+
+    private void Update() {
+        if (_isChecking)
+            Debug.Log(isGrounded());
+    }
     
 
     public bool MoveInDir(Vector2 dir) {
         if (_isMoving) return false;
+        if (!isGrounded()) return false;
 
         _audioSource.DOKill();
         _audioSource.pitch = Random.Range(0.95f, 1.05f);
@@ -60,6 +71,19 @@ public class CubeBasic : MonoBehaviour
     public void MakeKinematic(bool isKinematic) {
         _rigidBody.useGravity = !isKinematic;
         _rigidBody.isKinematic = isKinematic;
+    }
+
+    private bool isGrounded() {
+
+        Ray downRay = new Ray(transform.position + _raycastOrigin, Vector3.down);
+
+        if (Physics.Raycast(downRay, out RaycastHit hit, _raycastLenght)) {
+            Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.green);
+            return true;
+        }
+
+        Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.red);
+        return false;
     }
 
 }
