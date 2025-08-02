@@ -5,6 +5,8 @@ public class SwitchCubeBtn : MonoBehaviour
     [SerializeField] private bool goToNext = true;
 
     public void OnClick() {
-        GameManager.instance.currentLevel.SwitchCube(goToNext);
+        
+        if (GameManager.instance.currentLevel != null)
+            GameManager.instance.currentLevel.SwitchCube(goToNext);
     }
 }
