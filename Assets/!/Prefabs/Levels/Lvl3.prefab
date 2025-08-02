@@ -180,7 +180,7 @@ MonoBehaviour:
     CustomLookAtTarget: 0
   Lens:
     FieldOfView: 60.000004
-    OrthographicSize: 1
+    OrthographicSize: 3
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 9050773998730427260}
   - component: {fileID: 136362191762407482}
   m_Layer: 0
-  m_Name: Lvl6
+  m_Name: Lvl3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -478,14 +478,6 @@ PrefabInstance:
     - target: {fileID: 3538831120011152193, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
       propertyPath: m_Name
       value: CubeHole
-      objectReference: {fileID: 0}
-    - target: {fileID: 8385624562296621225, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8385624562296621225, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8766702768183676479, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
       propertyPath: m_LocalPosition.x

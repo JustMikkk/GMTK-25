@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8951861293256025113}
   - component: {fileID: 7026291335998050993}
   m_Layer: 0
-  m_Name: CubesHolder Lvl2
+  m_Name: CubesRing Lvl2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

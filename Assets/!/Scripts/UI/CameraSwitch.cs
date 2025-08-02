@@ -9,7 +9,8 @@ public class CameraSwitch : MonoBehaviour
 
     private bool isVideoMode {
         get { return _isVideoMode; }
-        set { 
+        set {
+            if (_isVideoMode == value) return;
             _isVideoMode = value;
             animateSwitch();
         }

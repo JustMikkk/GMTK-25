@@ -161,13 +161,13 @@ public class CubeBasic : MonoBehaviour
             Ray downRay = new Ray(transform.position + origin, Vector3.down);
 
             if (Physics.Raycast(downRay, out RaycastHit hit, _raycastLenght)) {
-                // Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.green);
+                Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.green);
                 return true;
+            } else {
+                Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.red);
             }
         }
 
-
-        // Debug.DrawRay(downRay.origin, downRay.direction * _raycastLenght, Color.red);
         return false;
     }
 
