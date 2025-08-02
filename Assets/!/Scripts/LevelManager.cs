@@ -280,10 +280,10 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        foreach (CubeMove move in _moves) {
-            _cubes[move.cubeIndex].MoveInDir(move.direction);
-            yield return new WaitForSeconds(0.21f);
-        }
+        // foreach (CubeMove move in _moves) {
+        //     _cubes[move.cubeIndex].MoveInDir(move.direction);
+        //     yield return new WaitForSeconds(0.21f);
+        // }
 
     // moving with all at once
         // for (int i = 0; i < getLongestMove(); i++) {
@@ -295,7 +295,16 @@ public class LevelManager : MonoBehaviour
 
         //     yield return new WaitForSeconds(0.21f);
         // }
+        int cubesReadyCounter = 0;
+        for (int i = 0; i < _cubes.Count(); i++) {
+            _cubes[i].sequenceCompleted.AddListener(() => {
+                cubesReadyCounter++;
+            });
+            _cubes[i].MoveFromSequence(movesDict[i]);
+        }
 
+
+        yield return new WaitUntil(() => cubesReadyCounter == _cubes.Count());
         yield return new WaitForSeconds(2f);
 
         if (_isZooming)

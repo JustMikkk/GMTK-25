@@ -1321,10 +1321,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e0e309fdf4459c4b7c78d6b03dda20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sequenceCompleted:
+    m_PersistentCalls:
+      m_Calls: []
   _rotatableMesh: {fileID: 7132428030190695291}
   _arrowGO: {fileID: 4503140985486586263}
   _moveDir: {x: 0, y: 0, z: 0}
-  _isChecking: 0
   _raycastOrigin: {x: 0, y: -0.4, z: 0}
   _raycastLenght: 0.1
 --- !u!54 &2644776930244648049
@@ -1335,9 +1337,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7602302420000025457}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
-  m_AngularDrag: 0
+  m_AngularDrag: 100
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
