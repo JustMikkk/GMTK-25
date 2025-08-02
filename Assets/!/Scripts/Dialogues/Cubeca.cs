@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 
 
 public class Cubeca : MonoBehaviour
@@ -11,11 +12,54 @@ public class Cubeca : MonoBehaviour
     [SerializeField] private Transform _leftElbow;
     [SerializeField] private List<Vector3> _drinkRotations;
 
+    private Animator _animator;
+
+    private void Awake() {
+        _animator = GetComponent<Animator>();
+    }
+
 
     private void Start() {
-        StartCoroutine(blink());
+        // StartCoroutine(blink());
         // StartCoroutine(talk());
-        StartCoroutine(drink());
+        // StartCoroutine(drink());
+        StartCoroutine(helloCutscene());
+
+    }
+
+    private IEnumerator ayNoWay() {
+        yield return new WaitForSeconds(2);
+
+        _animator.SetTrigger("goNext");
+
+        yield return new WaitForSeconds(0.15f);
+
+        _animator.SetTrigger("goNext");
+
+        yield return new WaitForSeconds(0.15f);
+
+        _animator.SetTrigger("goNext");
+
+        yield return new WaitForSeconds(0.15f);
+
+        // _animator.SetTrigger("goNext");
+    }
+
+    private IEnumerator helloCutscene(float delay = 0.3f) {
+        Debug.Log(delay);
+        yield return new WaitForSeconds(3f);
+        _animator.SetInteger("animationIndex", 1);
+        _animator.SetTrigger("playAnimation");
+        yield return new WaitForSeconds(1f);
+        
+        for (int i = 0; i < 34; i++) {
+            _animator.SetTrigger("goNext");
+            yield return new WaitForSeconds(delay);
+        }
+
+        yield return new WaitForSeconds(10f);
+
+        yield return helloCutscene(delay + 0.01f);
     }
 
     private IEnumerator blink() {
