@@ -58,7 +58,7 @@ public class Cubeca : MonoBehaviour
         if (_goNextTimer >= 0.3f) {
             _goNextTimer = 0;
             _animator.SetTrigger(_goNextHash);
-            _animator.SetInteger(_currentIdleHash, UnityEngine.Random.Range(0, 8));
+            _animator.SetInteger(_currentIdleHash, UnityEngine.Random.Range(0, 16));
         }
     }
 
@@ -83,14 +83,16 @@ public class Cubeca : MonoBehaviour
             _bubbleRect.DOScaleY(0, 0.3f);
             _bgRect.DOScaleY(0f, 0.3f).SetDelay(0.3f);
             dialogueFinishedEvent?.Invoke();
+            _animator.SetTrigger("goIdle");
             GameManager.instance.DialogueComplete();
             return;
         }
         if (_isTalking) {
             StopCoroutine(animateText());
+            _isTalking = false;
+            _goalString = _goalString[1..];
             _bubbleTextFront.text = _goalString;
             _bubbleTextBack.text = _goalString;
-            _isTalking = false;
         } else {
             _goalString = _sequences[0].dialogues[_dialogueIndex];
             _dialogueIndex++;
@@ -137,6 +139,7 @@ public class Cubeca : MonoBehaviour
 
 
         foreach (char letter in _goalString.ToCharArray()) {
+            if (!_isTalking) break;
 
             if (char.IsDigit(letter)) {
                 playAnimation(int.Parse("" + letter));

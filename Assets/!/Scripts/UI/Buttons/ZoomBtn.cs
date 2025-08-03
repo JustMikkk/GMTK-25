@@ -19,7 +19,9 @@ public class ZoomBtn : MonoBehaviour
         _isZooming = !_isZooming;
         _text.text = _isZooming ? "Stop" : "Play";
 
-        if (GameManager.instance.currentLevel != null)
+        if (GameManager.instance.currentLevel != null){
+            GameManager.instance.currentLevel.SwitchCamera(true);
             GameManager.instance.currentLevel.Zoom(_isZooming);
+        }
     }
 }

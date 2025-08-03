@@ -119,9 +119,9 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        if (_switchCameraAction.WasPressedThisFrame()) {
-            SwitchCamera(!_isVideoCamera);
-        }
+        // if (_switchCameraAction.WasPressedThisFrame()) {
+        //     SwitchCamera(!_isVideoCamera);
+        // }
 
         if (_nextCubeAction.WasPressedThisFrame()) {
             SwitchCube(true);
@@ -245,8 +245,13 @@ public class LevelManager : MonoBehaviour
 
     public void Zoom(bool doZoomIn) {
         _isZooming = doZoomIn;
-
-        if (_isZooming) StartCoroutine(zoomIn());
+        if (_isZooming) {
+            _currentCube.Select(false);
+            _moveAction.Disable();
+            _nextCubeAction.Disable();
+            _prevCubeAction.Disable();
+            StartCoroutine(zoomIn());
+        } 
     }
 
 

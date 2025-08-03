@@ -67,9 +67,8 @@ public class GameManager : MonoBehaviour
 
 
     private void spawnLevel(int index, bool isReset) {
-        
-        StopAllCoroutines();
-        DOTween.KillAll();
+        // StopAllCoroutines();
+        // DOTween.KillAll();
 
         
         float delay = 0.3f;
@@ -103,6 +102,7 @@ public class GameManager : MonoBehaviour
 
 
     private void despawnLevel(bool isReset) {
+        EventBus.destroyingLevelEvent?.Invoke();
         SetTransitionCamera(true);
         currentLevel.levelReadyEvent.RemoveListener(onLevelReady);
 
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
 
     public void DialogueComplete() {
         if (_currentLevelIndex >= _levels.Count) return;
-        
+
         LevelData level = _levels[_currentLevelIndex];
         level.wasCutscenePlayed = true;
         _levels[_currentLevelIndex] = level;

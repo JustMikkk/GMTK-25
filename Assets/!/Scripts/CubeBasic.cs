@@ -35,6 +35,15 @@ public class CubeBasic : MonoBehaviour
         _transform = GetComponent<Transform>();
         _audioSource = GetComponent<AudioSource>();
     }
+
+    private void Start() {
+        EventBus.destroyingLevelEvent.AddListener(() => {
+            _transform.DOKill();
+            _isStatic = true;
+            _rotatableMesh.DOKill();
+            StopAllCoroutines();
+        });
+    }
     
 
     private void Update() {
