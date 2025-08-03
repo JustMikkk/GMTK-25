@@ -325,7 +325,6 @@ public class LevelManager : MonoBehaviour
         if (_isZooming)
             _succesfulZooms++;
             if (_succesfulZooms >= 3) {
-                Debug.Log("win");
                 GameManager.instance.UnlockNextLvl(_moves.Count());
             }
             yield return zoomIn();

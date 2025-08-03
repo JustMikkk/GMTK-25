@@ -173,7 +173,6 @@ public class Cubeca : MonoBehaviour
     }
 
     private void playAnimation(int index) {
-        Debug.Log(index);
         _goNextTimer = 0f;
         _animator.SetBool(_goNextHash, false);
         _animator.SetInteger(_animationIndexHash, index);

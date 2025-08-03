@@ -23,12 +23,12 @@ public class LevelBtn : MonoBehaviour
     }
 
     private void Start() {
-        updateUI(99);
+        updateUI();
         EventBus.levelUnlockedEvent.AddListener(updateUI);
     }
 
 
-    private void updateUI(int moves) {
+    private void updateUI() {
         if (GameManager.instance.IsLevelUnlocked(_index)) {
             _rawImg.color = Color.white;
             _text.color = Color.white;
@@ -37,17 +37,16 @@ public class LevelBtn : MonoBehaviour
             _eventTrigger.enabled = true;
             _rectTransform.localScale = Vector3.one;
 
-            if (moves < GameManager.instance.GetMinimumMoves(_index)) {
+            if (GameManager.instance.ShouldGetStar(_index)) {
                 _star.SetActive(true);
             }
-
         } else {
-            _rawImg.color = Color.gray;
-            _text.color = Color.gray;
-            _rawImg.raycastTarget = false;
-            _button.enabled = false;
-            _eventTrigger.enabled = false;
-            _rectTransform.localScale = Vector3.one * 0.8f;
+            // _rawImg.color = Color.gray;
+            // _text.color = Color.gray;
+            // _rawImg.raycastTarget = false;
+            // _button.enabled = false;
+            // _eventTrigger.enabled = false;
+            // _rectTransform.localScale = Vector3.one * 0.8f;
         }
     }
 

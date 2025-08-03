@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
         public GameObject prefab;
         public bool isUnlocked;
         public bool wasCutscenePlayed;
-        public int starRating;
+        public int movesUsed;
         public int minimumMoves;
     }
 
@@ -159,12 +159,17 @@ public class GameManager : MonoBehaviour
         var nextLevel = _levels[_currentLevelIndex + 1];
         nextLevel.isUnlocked = true;
         _levels[_currentLevelIndex + 1] = nextLevel;
-        Debug.Log("unlocking lvl " + nextLevel.levelIndex);
+
+        var currentLevel = _levels[_currentLevelIndex];
+        if (currentLevel.movesUsed == 0 || currentLevel.movesUsed > moves) {
+            currentLevel.movesUsed = moves;
+            _levels[_currentLevelIndex] = currentLevel;
+        }
 
         _nextLvlBtnCanvasGroup.DOKill();
         _nextLvlBtnCanvasGroup.interactable = true;
         _nextLvlBtnCanvasGroup.DOFade(1, 0.3f);
-        EventBus.levelUnlockedEvent?.Invoke(moves);
+        EventBus.levelUnlockedEvent?.Invoke();
     }
 
     public bool IsLevelUnlocked(int index) {
@@ -177,7 +182,8 @@ public class GameManager : MonoBehaviour
         return _levels[_currentLevelIndex + 1].isUnlocked;
     }
 
-    public int GetMinimumMoves(int index) {
-        return _levels[index].minimumMoves;
+
+    public bool ShouldGetStar(int index) {
+        return _levels[index].movesUsed <= _levels[index].minimumMoves && _levels[index].movesUsed != 0;
     }
 }
