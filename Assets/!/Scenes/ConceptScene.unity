@@ -5248,16 +5248,10 @@ MonoBehaviour:
     minimumMoves: 5
   - levelIndex: 6
     prefab: {fileID: 4992007729507254279, guid: 91fb10e2075fdbe0dbf97a4d1265c229, type: 3}
-    isUnlocked: 1
-    wasCutscenePlayed: 0
-    movesUsed: 0
-    minimumMoves: 20
-  - levelIndex: 7
-    prefab: {fileID: 8298872492916226360, guid: af04ec79a8feb9de98d6764611f76495, type: 3}
     isUnlocked: 0
     wasCutscenePlayed: 0
     movesUsed: 0
-    minimumMoves: 50
+    minimumMoves: 22
   _transitionCamera: {fileID: 1469560}
   _movesText: {fileID: 1093632420}
   _cubeIndexText: {fileID: 871922031}
@@ -6233,8 +6227,6 @@ MonoBehaviour:
 
       be short
       on time.'
-    fontSize: 30
-  - dialogues:
     - '3Wow, you really
 
       did it, this is the
@@ -6244,6 +6236,10 @@ MonoBehaviour:
       Give it
       your all!'
     - "1And thanks for \nplaying <3\n\n~CTRL Games"
+    fontSize: 30
+  - dialogues:
+    - 
+    - 
     fontSize: 30
   - dialogues:
     - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
@@ -10472,7 +10468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 127.99475, y: 163.00621}
+  m_AnchoredPosition: {x: 204.26523, y: 163.00621}
   m_SizeDelta: {x: 400, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1242954618
