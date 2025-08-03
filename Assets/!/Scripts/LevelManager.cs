@@ -54,6 +54,8 @@ public class LevelManager : MonoBehaviour
     private float _resetHoldTime = 2;
     private float _resetTimer = 0;
 
+    private int _succesfulZooms = 0;
+
 
 
     private Dictionary<int, List<Vector2>> movesDict = new Dictionary<int, List<Vector2>>() {
@@ -155,7 +157,7 @@ public class LevelManager : MonoBehaviour
 
     public void AppearNormal(float delay) {
         _gameHolder.gameObject.SetActive(true);
-        _gameHolder.localScale = Vector3.one * 0.01f;
+        _gameHolder.localScale = Vector3.one * 0.001f;
         _gameHolder.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
 
         _inputActionMap.Enable();
@@ -185,7 +187,7 @@ public class LevelManager : MonoBehaviour
         _isZooming = false;
         StopCoroutine(zoomIn());
 
-        _gameHolder.DOScale(Vector3.one * 0.01f, 1).SetEase(Ease.InOutSine);
+        _gameHolder.DOScale(Vector3.one * 0.001f, 1).SetEase(Ease.InOutSine);
         _gameHolder.DORotate(new Vector3(0, -180, 0), 1, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).OnComplete(() => {
             Destroy(gameObject);
         });
@@ -277,7 +279,7 @@ public class LevelManager : MonoBehaviour
         _cubesHolders.Remove(_cubesHolders.First());
         Destroy(oldCubesHolder.gameObject);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
 
         // foreach (CubeMove move in _moves) {
         //     _cubes[move.cubeIndex].MoveInDir(move.direction);
@@ -304,9 +306,14 @@ public class LevelManager : MonoBehaviour
 
 
         yield return new WaitUntil(() => cubesReadyCounter == _cubes.Count());
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         if (_isZooming)
+            _succesfulZooms++;
+            if (_succesfulZooms >= 3) {
+                Debug.Log("win");
+                GameManager.instance.UnlockNextLvl();
+            }
             yield return zoomIn();
     }
 
