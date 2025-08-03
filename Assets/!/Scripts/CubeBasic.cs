@@ -206,12 +206,16 @@ public class CubeBasic : MonoBehaviour
         {
             bool moved = false;
             float timer = 0;
-
-            while (!moved && timer < 3)
-            {
+         
+            while (!moved && timer < 2) { 
                 moved = moveInDir(move, 0.1f);
                 timer += Time.deltaTime;
                 yield return new WaitForSeconds(0.11f);
+            }
+            
+            if (timer > 1.9f) {
+                GameManager.instance.ResetLevel();
+                break;
             }
         }
 

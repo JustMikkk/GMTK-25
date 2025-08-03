@@ -7,6 +7,7 @@ public class LevelBtn : MonoBehaviour
 {
     [SerializeField] private int _index;
     [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private GameObject _star;
     
     private RawImage _rawImg;
     private RectTransform _rectTransform;
@@ -35,13 +36,17 @@ public class LevelBtn : MonoBehaviour
             _button.enabled = true;
             _eventTrigger.enabled = true;
             _rectTransform.localScale = Vector3.one;
+
+            if (GameManager.instance.ShouldGetStar(_index)) {
+                _star.SetActive(true);
+            }
         } else {
-            _rawImg.color = Color.gray;
-            _text.color = Color.gray;
-            _rawImg.raycastTarget = false;
-            _button.enabled = false;
-            _eventTrigger.enabled = false;
-            _rectTransform.localScale = Vector3.one * 0.8f;
+            // _rawImg.color = Color.gray;
+            // _text.color = Color.gray;
+            // _rawImg.raycastTarget = false;
+            // _button.enabled = false;
+            // _eventTrigger.enabled = false;
+            // _rectTransform.localScale = Vector3.one * 0.8f;
         }
     }
 

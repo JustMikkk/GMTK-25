@@ -41,6 +41,7 @@ public class Cubeca : MonoBehaviour
 
     private bool _isTalking = false;
     private string _goalString;
+    private int _sequenceIndex = 0;
     private int _dialogueIndex = 0;
 
     private float _goNextTimer = 0;
@@ -67,8 +68,8 @@ public class Cubeca : MonoBehaviour
     }
 
 
-    public void ShowDialogue(int index)
-    {
+    public void ShowDialogue(int index) {
+        _sequenceIndex = index;
         _dialogueIndex = 0;
         _bubbleTextFront.text = string.Empty;
         _bubbleTextBack.text = string.Empty;
@@ -85,10 +86,8 @@ public class Cubeca : MonoBehaviour
     }
 
 
-    public void OnClick()
-    {
-        if (_dialogueIndex == _sequences[0].dialogues.Count)
-        {
+    public void OnClick() {
+        if (_dialogueIndex == _sequences[_sequenceIndex].dialogues.Count) {
             _bubbleRect.DOScaleY(0, 0.3f);
             _bgRect.DOScaleY(0f, 0.3f).SetDelay(0.3f);
             dialogueFinishedEvent?.Invoke();
@@ -103,10 +102,8 @@ public class Cubeca : MonoBehaviour
             _goalString = _goalString[1..];
             _bubbleTextFront.text = _goalString;
             _bubbleTextBack.text = _goalString;
-        }
-        else
-        {
-            _goalString = _sequences[0].dialogues[_dialogueIndex];
+        } else {
+            _goalString = _sequences[_sequenceIndex].dialogues[_dialogueIndex];
             _dialogueIndex++;
             StartCoroutine(animateText());
         }
@@ -193,9 +190,7 @@ public class Cubeca : MonoBehaviour
         _isTalking = false;
     }
 
-    private void playAnimation(int index)
-    {
-        Debug.Log(index);
+    private void playAnimation(int index) {
         _goNextTimer = 0f;
         _animator.SetBool(_goNextHash, false);
         _animator.SetInteger(_animationIndexHash, index);
