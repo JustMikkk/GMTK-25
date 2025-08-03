@@ -610,6 +610,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2477907667743727075}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic (1)
@@ -699,6 +703,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4971864970862138186}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic (2)
@@ -776,6 +784,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5108263945170658622}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic
@@ -853,6 +865,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4971864970862138186}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic
@@ -930,6 +946,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2477907667743727075}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic
@@ -1019,6 +1039,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5108263945170658622}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic (2)
@@ -1096,6 +1120,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4971864970862138186}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic (1)
@@ -1173,6 +1201,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5108263945170658622}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic (1)
@@ -1250,6 +1282,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2477907667743727075}
     m_Modifications:
+    - target: {fileID: 1908904956217867533, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
       propertyPath: m_Name
       value: CubeBasic (2)

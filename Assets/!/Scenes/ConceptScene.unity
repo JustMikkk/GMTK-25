@@ -4536,6 +4536,7 @@ MonoBehaviour:
   - {fileID: 8956524511707316268, guid: 611dfd5ede98806779730ced5c3ba325, type: 3}
   - {fileID: 7703582273232525621, guid: 0b793ca210076c6d7a90498cc4883d7e, type: 3}
   - {fileID: 4571899419942931198, guid: ea9a5ff1c9cb07736a4ca768f6a3a9b4, type: 3}
+  - {fileID: 8202694355818839384, guid: bec154346cbd4f08f92122f362c865b8, type: 3}
   - {fileID: 1808639305386442542, guid: dddead965bef4357dbd418cb880b53f2, type: 3}
   _transitionCamera: {fileID: 1469560}
   _movesText: {fileID: 1093632420}
@@ -9586,7 +9587,7 @@ Transform:
   m_GameObject: {fileID: 1403385297}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

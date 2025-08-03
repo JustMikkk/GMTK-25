@@ -475,6 +475,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3356504612119531559}
     m_Modifications:
+    - target: {fileID: 863009747718451810, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3538831120011152193, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
       propertyPath: m_Name
       value: CubeHole
@@ -548,6 +552,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 524360562001920033}
     m_Modifications:
+    - target: {fileID: 863009747718451810, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3538831120011152193, guid: 2ac579325f921d859b862d3ccfc535f1, type: 3}
       propertyPath: m_Name
       value: CubeHole

@@ -618,7 +618,11 @@ MonoBehaviour:
   - {x: 0.2, y: -0.5, z: 0}
   - {x: 0, y: -0.5, z: -0.2}
   - {x: 0, y: -0.5, z: 0.2}
-  _raycastLenght: 0.5
+  - {x: 0, y: -0.5, z: 0.1}
+  - {x: 0, y: -0.5, z: -0.1}
+  - {x: 0.1, y: -0.5, z: 0}
+  - {x: -0.1, y: -0.5, z: 0}
+  _raycastLenght: 0.9
 --- !u!82 &4184712092479588743
 AudioSource:
   m_ObjectHideFlags: 0
