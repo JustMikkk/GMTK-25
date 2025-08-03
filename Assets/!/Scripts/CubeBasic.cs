@@ -208,9 +208,9 @@ public class CubeBasic : MonoBehaviour
             float timer = 0;
          
             while (!moved && timer < 2) { 
-                moved = moveInDir(move, 0.1f);
+                moved = moveInDir(move, 0.2f);
                 timer += Time.deltaTime;
-                yield return new WaitForSeconds(0.11f);
+                yield return new WaitForSeconds(0.21f);
             }
             
             if (timer > 1.9f) {

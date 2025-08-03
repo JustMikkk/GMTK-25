@@ -41,12 +41,12 @@ public class LevelBtn : MonoBehaviour
                 _star.SetActive(true);
             }
         } else {
-            // _rawImg.color = Color.gray;
-            // _text.color = Color.gray;
-            // _rawImg.raycastTarget = false;
-            // _button.enabled = false;
-            // _eventTrigger.enabled = false;
-            // _rectTransform.localScale = Vector3.one * 0.8f;
+            _rawImg.color = Color.gray;
+            _text.color = Color.gray;
+            _rawImg.raycastTarget = false;
+            _button.enabled = false;
+            _eventTrigger.enabled = false;
+            _rectTransform.localScale = Vector3.one * 0.8f;
         }
     }
 
