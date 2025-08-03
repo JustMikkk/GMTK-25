@@ -5580,6 +5580,7 @@ MonoBehaviour:
   _bubbleTextFront: {fileID: 906449889}
   _bubbleTextBack: {fileID: 384293484}
   _bgRect: {fileID: 1079231299}
+  _cubicaRect: {fileID: 1242954617}
 --- !u!1 &817472891
 GameObject:
   m_ObjectHideFlags: 0
@@ -8500,6 +8501,7 @@ GameObject:
   - component: {fileID: 1242954617}
   - component: {fileID: 1242954619}
   - component: {fileID: 1242954618}
+  - component: {fileID: 1242954620}
   m_Layer: 5
   m_Name: Cubica
   m_TagString: Untagged
@@ -8517,15 +8519,15 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 767986403}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -44.26, y: 0}
+  m_AnchoredPosition: {x: 155.74013, y: 200}
   m_SizeDelta: {x: 400, y: 400}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1242954618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8540,7 +8542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -8561,6 +8563,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1242954616}
   m_CullTransparentMesh: 1
+--- !u!114 &1242954620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242954616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 767986406}
+          m_TargetAssemblyTypeName: Cubeca, Assembly-CSharp
+          m_MethodName: OnCubicaPointerEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 767986406}
+          m_TargetAssemblyTypeName: Cubeca, Assembly-CSharp
+          m_MethodName: OnCubicaPointerExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 767986406}
+          m_TargetAssemblyTypeName: Cubeca, Assembly-CSharp
+          m_MethodName: OnCubicaClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1250921305
 GameObject:
   m_ObjectHideFlags: 0
@@ -15475,31 +15538,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.2745438
+      value: 5.328377
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.5078354
+      value: -2.7078323
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.80602574
+      value: -6.9275155
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.13052613
+      value: 0.0848083
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.99144495
+      value: 0.9963973
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -15507,7 +15570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 165
+      value: 170.27
       objectReference: {fileID: 0}
     - target: {fileID: 897372613547481682, guid: 589bdec217d72aad89656f8738733dda, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

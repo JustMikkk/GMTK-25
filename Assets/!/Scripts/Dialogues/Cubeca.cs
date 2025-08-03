@@ -24,6 +24,7 @@ public class Cubeca : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _bubbleTextBack;
 
     [SerializeField] private RectTransform _bgRect;
+    [SerializeField] private RectTransform _cubicaRect;
 
 
     private int _goNextHash = Animator.StringToHash("goNext");
@@ -88,6 +89,28 @@ public class Cubeca : MonoBehaviour
             _dialogueIndex++;
             StartCoroutine(animateText());
         }
+    }
+
+
+    public void OnCubicaClick() {
+        if (_bgRect.localScale.y == 0) {
+            GameManager.instance.ShowDialogue();
+            _cubicaRect.DOKill();
+            _cubicaRect.DOScale(0.95f, 0.1f).SetEase(Ease.OutBack).OnComplete(() => {
+                _cubicaRect.DOScale(1f, 0.1f).SetEase(Ease.OutBack);
+            });
+        }
+    }
+
+
+    public void OnCubicaPointerEnter() {
+        _cubicaRect.DOKill();
+        _cubicaRect.DOScale(1.05f, 0.1f).SetEase(Ease.InOutSine);
+    }
+
+    public void OnCubicaPointerExit() {
+        _cubicaRect.DOKill();
+        _cubicaRect.DOScale(1, 0.1f).SetEase(Ease.InOutSine);
     }
 
 

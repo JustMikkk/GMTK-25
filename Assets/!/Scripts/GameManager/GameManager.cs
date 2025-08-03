@@ -122,7 +122,9 @@ public class GameManager : MonoBehaviour
 
 
 #endregion
-    public void ShowDialogue(int index) {
+
+    public void ShowDialogue(int index = -1) {
+        if (index == -1) index = _levels[_currentLevelIndex].levelIndex;
         _cubica.ShowDialogue(index);
     }
 
