@@ -5448,7 +5448,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -250, y: 0}
   m_SizeDelta: {x: 250, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &728117394
@@ -5554,100 +5554,86 @@ MonoBehaviour:
       m_Calls: []
   _sequences:
   - dialogues:
-    - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
-    - "3You must be \nthe new trainee\nworking here. "
-    - '2That makes me
+    - "0See these cubes?\nYour job is to\nmake them loop at \nleast three times."
+    - "0You have two camera\nmodes video / edit\nthe switch on the \nright manages
+      them."
+    - '3The final animation
 
-      ... YOUR BOSS!,
+      will be in video
 
-      You can call me
+      mode, but you can
 
-      Cubica'
-    - "4Say, have you ever\n seen one of those \nmind bending videos \nthat go on
-      forever?"
-    - '5Well, now YOU
+      work
+      in both.'
+    - '0The bottom right
 
-      will be making them!'
+      button will turn on
+
+      the scaling machine
+
+      *scarry*'
+    - '0After you press it
+
+      your moves will be
+
+      locked so do it after
+
+      you''re
+      done.'
     fontSize: 30
   - dialogues:
-    - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
-    - "3You must be \nthe new trainee\nworking here. "
-    - '2That makes me
-
-      ... YOUR BOSS!,
-
-      You can call me
-
-      Cubica'
-    - "4Say, have you ever\n seen one of those \nmind bending videos \nthat go on
-      forever?"
-    - '5Well, now YOU
-
-      will be making them!'
+    - 0Wow, so many cubes!
+    - "0To switch between\nthem press Q / E\nor click the \n< > buttons! "
     fontSize: 30
   - dialogues:
-    - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
-    - "3You must be \nthe new trainee\nworking here. "
-    - '2That makes me
+    - "0Cubes can have\nholes in them,\nbut they all roll \nthe same."
+    - '0This one reminds
 
-      ... YOUR BOSS!,
-
-      You can call me
-
-      Cubica'
-    - "4Say, have you ever\n seen one of those \nmind bending videos \nthat go on
-      forever?"
-    - '5Well, now YOU
-
-      will be making them!'
+      me of cheeesee.'
     fontSize: 30
   - dialogues:
-    - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
-    - "3You must be \nthe new trainee\nworking here. "
-    - '2That makes me
+    - '0After you press
 
-      ... YOUR BOSS!,
+      Play all the cubes
 
-      You can call me
+      will move at the
 
-      Cubica'
-    - "4Say, have you ever\n seen one of those \nmind bending videos \nthat go on
-      forever?"
-    - '5Well, now YOU
+      same
+      time.'
+    - '2I should mention
 
-      will be making them!'
+      that your salary
+
+      will depend on the
+
+      amount
+      of moves'
+    - '0you make.
+
+
+      You gotta save
+
+      where you can!'
     fontSize: 30
   - dialogues:
-    - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
-    - "3You must be \nthe new trainee\nworking here. "
-    - '2That makes me
+    - '0Geez that will
 
-      ... YOUR BOSS!,
+      require some
 
-      You can call me
-
-      Cubica'
-    - "4Say, have you ever\n seen one of those \nmind bending videos \nthat go on
-      forever?"
-    - '5Well, now YOU
-
-      will be making them!'
+      thinking...'
     fontSize: 30
   - dialogues:
-    - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
-    - "3You must be \nthe new trainee\nworking here. "
-    - '2That makes me
+    - '0Not every cube
 
-      ... YOUR BOSS!,
+      is the same on
 
-      You can call me
+      all sides, this
 
-      Cubica'
-    - "4Say, have you ever\n seen one of those \nmind bending videos \nthat go on
-      forever?"
-    - '5Well, now YOU
+      one''s
+      like a donut.'
+    - '0Even more
 
-      will be making them!'
+      thinkin...'
     fontSize: 30
   - dialogues:
     - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
@@ -5776,7 +5762,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _index: 1
   _text: {fileID: 530145549}
-  _rawImg: {fileID: 793113334}
 --- !u!114 &793113332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7783,7 +7768,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _index: 5
   _text: {fileID: 26382172}
-  _rawImg: {fileID: 1054082062}
 --- !u!114 &1054082060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12790,7 +12774,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _index: 4
   _text: {fileID: 169931878}
-  _rawImg: {fileID: 1641826591}
 --- !u!114 &1641826589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13396,7 +13379,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _index: 2
   _text: {fileID: 1740971550}
-  _rawImg: {fileID: 1683103596}
 --- !u!114 &1683103594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14930,7 +14912,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _index: 3
   _text: {fileID: 1956766246}
-  _rawImg: {fileID: 1791710458}
 --- !u!114 &1791710456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15788,7 +15769,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _index: 0
   _text: {fileID: 1313048705}
-  _rawImg: {fileID: 1890959037}
 --- !u!1 &1898408599
 GameObject:
   m_ObjectHideFlags: 0
