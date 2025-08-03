@@ -10,6 +10,7 @@ public class CubeBasic : MonoBehaviour
 
     [SerializeField] private Transform _rotatableMesh;
     [SerializeField] private GameObject _arrowGO;
+    [SerializeField] private ParticleSystem _landParticles;
 
     [SerializeField] private bool _isMonitoring = false;
     [SerializeField] private Vector3 _moveDir;
@@ -19,9 +20,11 @@ public class CubeBasic : MonoBehaviour
 
     private List<Vector2> _movesSequence;
     private float _initialDelay;
+    private float _movingSpeed = 0.2f;
 
     private bool _isMoving = false;
     private bool _isStatic = true;
+    private bool _isFalling = false;
 
     private Rigidbody _rigidBody;
     private Transform _transform;
@@ -41,16 +44,16 @@ public class CubeBasic : MonoBehaviour
 
         if (!isGrounded()) {
             _isStatic = true;
-            _transform.DOLocalMoveY(Mathf.RoundToInt(_transform.position.y) -1, 0.2f).SetEase(Ease.Linear).OnComplete(() => {
-                if (isGrounded()) Debug.Log("landing!");
-                _isStatic = false;
+            _isFalling = true;
+            _transform.DOLocalMoveY(Mathf.RoundToInt(_transform.position.y) -1, _movingSpeed).SetEase(Ease.InSine).OnComplete(() => {
+                if (isGrounded()) {
+                    _landParticles.Play();
+                    _isStatic = false;
+                    _isFalling = false;
+                } else {
+                    StartCoroutine(tryFalling());
+                }
             });
-
-            if (_transform.position.y < -10) {
-                GameManager.instance.ResetLevel();
-            }
-        } else {
-            _isStatic = true;
         }
     }
 
@@ -78,9 +81,31 @@ public class CubeBasic : MonoBehaviour
     }
 
 
+    private IEnumerator tryFalling() {
+        _transform.DOLocalMoveY(Mathf.RoundToInt(_transform.position.y) -1, _movingSpeed).SetEase(Ease.Linear);
+
+        yield return new WaitForSeconds(_movingSpeed);
+
+        if (_transform.position.y < -10) {
+            GameManager.instance.ResetLevel();
+        }
+
+        if (isGrounded()) {
+            _landParticles.Play();
+            _isStatic = false;
+            _isFalling = false;
+        } else {
+            yield return tryFalling();
+        }
+    }
+
+
     private bool moveInDir(Vector2 dir, float speed) {
+        _movingSpeed = speed;
         if (_isMoving) return false;
+        if (_isFalling) return false;
         if (!isGrounded()) return false;
+
 
         if (!canMoveInDir(dir)) {
             _isMoving = true;
@@ -145,7 +170,7 @@ public class CubeBasic : MonoBehaviour
             bool moved = false;
             float timer = 0;
          
-            while (!moved && timer < 3) {  // Changed || to && and > to <
+            while (!moved && timer < 3) { 
                 moved = moveInDir(move, 0.1f);
                 timer += Time.deltaTime;
                 yield return new WaitForSeconds(0.11f);

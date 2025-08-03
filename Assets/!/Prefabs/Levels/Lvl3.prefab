@@ -671,7 +671,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8477655364387468676, guid: 356c98ba33b914e54b6c79f643448f58, type: 3}
       propertyPath: m_Name
-      value: CubesHolder Lvl1
+      value: CubesHolder Lvl3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
