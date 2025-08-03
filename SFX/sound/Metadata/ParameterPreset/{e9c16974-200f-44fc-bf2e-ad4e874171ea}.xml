@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{e9c16974-200f-44fc-bf2e-ad4e874171ea}">
+		<property name="name">
+			<value>Letter</value>
+		</property>
+		<relationship name="folder">
+			<destination>{14d03869-7f82-4aa7-ae29-69feb5aa9f35}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{cee829ca-ffb2-4393-a0b3-50126f7fd51b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{cee829ca-ffb2-4393-a0b3-50126f7fd51b}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>23</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>a</value>
+			<value>b</value>
+			<value>c</value>
+			<value>d</value>
+			<value>e</value>
+			<value>f</value>
+			<value>g</value>
+			<value>h</value>
+			<value>i</value>
+			<value>j</value>
+			<value>k</value>
+			<value>l</value>
+			<value>m</value>
+			<value>n</value>
+			<value>o</value>
+			<value>p</value>
+			<value>r</value>
+			<value>s</value>
+			<value>t</value>
+			<value>u</value>
+			<value>w</value>
+			<value>y</value>
+			<value>z</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

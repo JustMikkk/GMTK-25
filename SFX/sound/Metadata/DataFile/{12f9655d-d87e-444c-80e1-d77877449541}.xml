@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="DataFile" id="{12f9655d-d87e-444c-80e1-d77877449541}">
+		<property name="assetPath">
+			<value>Alphabet/literka-004.wav.meta</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7c864a3b-0b1b-40a7-887b-3cc3bf2665af}</destination>
+		</relationship>
+	</object>
+</objects>

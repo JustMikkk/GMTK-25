@@ -13,9 +13,10 @@ public class LevelManager : MonoBehaviour
     public UnityEvent levelReadyEvent = new();
 
 
-    public struct CubeMove {
+    public struct CubeMove
+    {
         public int cubeIndex;
-        public Vector2 direction; 
+        public Vector2 direction;
     }
 
 
@@ -28,8 +29,8 @@ public class LevelManager : MonoBehaviour
     private InputAction _prevCubeAction;
     private InputAction _resetAction;
     private InputAction _undoAction;
-    
-    
+
+
     [Header("Cameras")]
     [SerializeField] private CinemachineCamera _videoCamera;
     [SerializeField] private CinemachineCamera _overviewCamera;
@@ -39,8 +40,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float _zoomAmount;
     [SerializeField] private List<Vector3> _nextPositions;
     private bool _isVideoCamera = false;
-    
-    
+
+
     [Header("Cubes")]
     [SerializeField] private Transform _gameHolder;
     [SerializeField] private GameObject _newPrefab;
@@ -70,13 +71,14 @@ public class LevelManager : MonoBehaviour
     };
 
     private List<CubeMove> _moves = new();
-    
-    
+
+
     private bool _isZooming = false;
 
-#region Lifetime Methods
+    #region Lifetime Methods
 
-    private void Awake() {
+    private void Awake()
+    {
         _inputActionMap = _inputActions.FindActionMap("Player");
 
         _moveAction = InputSystem.actions.FindAction("Move");
@@ -90,36 +92,45 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    private void Start() {
+    private void Start()
+    {
         _cubes = _cubesHolders.Last().cubes;
 
         _currentCube = _cubes[_currentCubeIndex];
         _currentCube.Select(true);
 
-        EventBus.destroyingLevelEvent.AddListener(() => {
+        EventBus.destroyingLevelEvent.AddListener(() =>
+        {
             StopAllCoroutines();
             _isZooming = false;
 
-            foreach (CubesHolder ch in _cubesHolders) {
-            // ch.ResetCubesPositions();
+            foreach (CubesHolder ch in _cubesHolders)
+            {
+                // ch.ResetCubesPositions();
                 ch.transform.DOKill();
-            };
+            }
+            ;
         });
     }
 
 
-    void Update() {
+    void Update()
+    {
 
         if (!_inputActionMap.enabled) return;
 
-        if (_moveAction.IsPressed()) {
+        if (_moveAction.IsPressed())
+        {
             Vector2 direction = _moveAction.ReadValue<Vector2>();
-            if (direction.x != 0 && direction.y != 0) {
+            if (direction.x != 0 && direction.y != 0)
+            {
                 direction = direction.x > direction.y ? new Vector2(direction.x, 0).normalized : new Vector2(0, direction.y).normalized;
             }
-            if (_currentCube.MoveInDir(direction)) {                
+            if (_currentCube.MoveInDir(direction))
+            {
                 movesDict[_currentCubeIndex].Add(direction);
-                CubeMove move = new() {
+                CubeMove move = new()
+                {
                     cubeIndex = _currentCubeIndex,
                     direction = direction
                 };
@@ -132,39 +143,48 @@ public class LevelManager : MonoBehaviour
         //     SwitchCamera(!_isVideoCamera);
         // }
 
-        if (_nextCubeAction.WasPressedThisFrame()) {
+        if (_nextCubeAction.WasPressedThisFrame())
+        {
             SwitchCube(true);
         }
 
-        if (_prevCubeAction.WasPressedThisFrame()) {
+        if (_prevCubeAction.WasPressedThisFrame())
+        {
             SwitchCube(false);
         }
 
-        if (_resetAction.IsPressed()) {
+        if (_resetAction.IsPressed())
+        {
             GameManager.instance.SetTransitionCamera(true);
             _resetTimer += Time.deltaTime;
 
-            if (_resetTimer >= _resetHoldTime) {
+            if (_resetTimer >= _resetHoldTime)
+            {
                 _resetTimer = 0;
                 GameManager.instance.ResetLevel();
             }
 
-        } else {
-            if (_resetTimer > 0) {
+        }
+        else
+        {
+            if (_resetTimer > 0)
+            {
                 GameManager.instance.SetTransitionCamera(false);
                 _resetTimer -= Time.deltaTime;
             }
         }
 
-        if (_undoAction.WasPressedThisFrame()) {
+        if (_undoAction.WasPressedThisFrame())
+        {
             UndoMove();
         }
     }
 
-#endregion
-#region Starting / Ending
+    #endregion
+    #region Starting / Ending
 
-    public void AppearNormal(float delay) {
+    public void AppearNormal(float delay)
+    {
         _gameHolder.gameObject.SetActive(true);
         _gameHolder.localScale = Vector3.one * 0.001f;
         _gameHolder.rotation = Quaternion.Euler(new Vector3(0, -180, 0));
@@ -172,75 +192,92 @@ public class LevelManager : MonoBehaviour
         _inputActionMap.Enable();
         _gameHolder.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
         _gameHolder.DOScale(Vector3.one, 2).SetEase(Ease.InOutSine).SetDelay(delay);
-        _gameHolder.DORotate(Vector3.zero, 2, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).SetDelay(delay).OnComplete(() => {
+        _gameHolder.DORotate(Vector3.zero, 2, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).SetDelay(delay).OnComplete(() =>
+        {
             levelReadyEvent?.Invoke();
             Invoke(nameof(makeCubesNotKinematic), 1);
         });
     }
 
 
-    public void AppearReset(float delay) {
+    public void AppearReset(float delay)
+    {
         _gameHolder.gameObject.SetActive(true);
         _gameHolder.position = new Vector3(0, -50, 0);
 
         _inputActionMap.Enable();
-        _gameHolder.DOMoveY(0, 1f).SetEase(Ease.InOutSine).SetDelay(delay).OnComplete(() => {
+        _gameHolder.DOMoveY(0, 1f).SetEase(Ease.InOutSine).SetDelay(delay).OnComplete(() =>
+        {
             levelReadyEvent?.Invoke();
             Invoke(nameof(makeCubesNotKinematic), 1);
         });
     }
 
 
-    public void DisappearNormal() {
+    public void DisappearNormal()
+    {
         _inputActionMap.Disable();
         _isZooming = false;
         StopCoroutine(zoomIn());
 
         _gameHolder.DOScale(Vector3.one * 0.001f, 1).SetEase(Ease.InOutSine);
-        _gameHolder.DORotate(new Vector3(0, -180, 0), 1, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).OnComplete(() => {
+        _gameHolder.DORotate(new Vector3(0, -180, 0), 1, RotateMode.FastBeyond360).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
             Destroy(gameObject);
         });
     }
 
-    public void DisappearReset() {
+    public void DisappearReset()
+    {
         _inputActionMap.Disable();
         _isZooming = false;
         StopCoroutine(zoomIn());
 
-        _gameHolder.DOMoveY(-50, 1f).SetEase(Ease.InOutSine).OnComplete(() => {
+        _gameHolder.DOMoveY(-50, 1f).SetEase(Ease.InOutSine).OnComplete(() =>
+        {
             Destroy(gameObject);
         });
     }
 
 
-#endregion
-#region Switching
+    #endregion
+    #region Switching
 
 
-    public void SwitchCamera(bool isVideo) {
+    public void SwitchCamera(bool isVideo)
+    {
         _isVideoCamera = isVideo;
 
-        if (_isVideoCamera) {
+        if (_isVideoCamera)
+        {
             _videoCamera.Priority = 20;
             _overviewCamera.Priority = 10;
             _currentCube.Select(false);
-        } else {
+            AudioManager.Instance.setMusicArea(MusicArea.VideoMode);
+        }
+        else
+        {
             _overviewCamera.Priority = 20;
             _videoCamera.Priority = 10;
             _currentCube.Select(true);
+            AudioManager.Instance.setMusicArea(MusicArea.EditMode);
         }
     }
 
 
-    public void SwitchCube(bool isNext) {
+    public void SwitchCube(bool isNext)
+    {
         _currentCube.Select(false);
 
-        if (isNext) {
+        if (isNext)
+        {
             _currentCubeIndex++;
             if (_currentCubeIndex == _cubes.Count) _currentCubeIndex = 0;
-        } else {
+        }
+        else
+        {
             _currentCubeIndex--;
-            if (_currentCubeIndex == -1) _currentCubeIndex = _cubes.Count() -1;
+            if (_currentCubeIndex == -1) _currentCubeIndex = _cubes.Count() - 1;
         }
 
         GameManager.instance.UpdateCubeText(_currentCubeIndex + 1);
@@ -249,26 +286,30 @@ public class LevelManager : MonoBehaviour
     }
 
 
-#endregion
-#region Zooming
+    #endregion
+    #region Zooming
 
-    public void Zoom(bool doZoomIn) {
+    public void Zoom(bool doZoomIn)
+    {
         _isZooming = doZoomIn;
-        if (_isZooming) {
+        if (_isZooming)
+        {
             _currentCube.Select(false);
             _moveAction.Disable();
             _nextCubeAction.Disable();
             _prevCubeAction.Disable();
             StartCoroutine(zoomIn());
-        } 
+        }
     }
 
 
-    private IEnumerator zoomIn() {
+    private IEnumerator zoomIn()
+    {
         makeCubesKinematic();
 
         int index = 0;
-        foreach (CubesHolder ch in _cubesHolders) {
+        foreach (CubesHolder ch in _cubesHolders)
+        {
             // ch.ResetCubesPositions();
             ch.transform.DOMove(_nextPositions[index], 2);
             ch.transform.DOScale(ch.transform.localScale * _zoomAmount, 2);
@@ -283,7 +324,7 @@ public class LevelManager : MonoBehaviour
         makeCubesNotKinematic();
 
         _currentCube.Select(false);
-        
+
         _currentCubeIndex = 0;
         _currentCube = _cubes[_currentCubeIndex];
 
@@ -300,7 +341,7 @@ public class LevelManager : MonoBehaviour
         //     yield return new WaitForSeconds(0.21f);
         // }
 
-    // moving with all at once
+        // moving with all at once
         // for (int i = 0; i < getLongestMove(); i++) {
         //     for (int j = 0; j < _cubes.Count(); j++) {
         //         if (movesDict[j].Count() > i) {
@@ -311,8 +352,10 @@ public class LevelManager : MonoBehaviour
         //     yield return new WaitForSeconds(0.21f);
         // }
         int cubesReadyCounter = 0;
-        for (int i = 0; i < _cubes.Count(); i++) {
-            _cubes[i].sequenceCompleted.AddListener(() => {
+        for (int i = 0; i < _cubes.Count(); i++)
+        {
+            _cubes[i].sequenceCompleted.AddListener(() =>
+            {
                 cubesReadyCounter++;
             });
             _cubes[i].MoveFromSequence(movesDict[i], 0);
@@ -331,11 +374,14 @@ public class LevelManager : MonoBehaviour
     }
 
 
-    private int getLongestMove() {
+    private int getLongestMove()
+    {
         int biggest = movesDict[0].Count();
 
-        for (int i = 0; i < _moves.Count(); i++) {
-            if (movesDict[i].Count() > biggest) {
+        for (int i = 0; i < _moves.Count(); i++)
+        {
+            if (movesDict[i].Count() > biggest)
+            {
                 biggest = movesDict[i].Count();
             }
         }
@@ -343,39 +389,48 @@ public class LevelManager : MonoBehaviour
         return biggest;
     }
 
-#endregion
-#region Help Methods
+    #endregion
+    #region Help Methods
 
-    private void makeCubesKinematic() {
-        foreach (CubeBasic cube in _cubes) {
+    private void makeCubesKinematic()
+    {
+        foreach (CubeBasic cube in _cubes)
+        {
             cube.MakeKinematic(true);
         }
     }
 
-    private void makeCubesNotKinematic() {
-        foreach (CubeBasic cube in _cubes) {
+    private void makeCubesNotKinematic()
+    {
+        foreach (CubeBasic cube in _cubes)
+        {
             cube.MakeKinematic(false);
         }
     }
 
 
-    public void UndoMove() {
-        if (_moves.Count() == 0) {
-            foreach (CubeBasic cube in _cubes) {
+    public void UndoMove()
+    {
+        if (_moves.Count() == 0)
+        {
+            foreach (CubeBasic cube in _cubes)
+            {
                 cube.transform.position += Vector3.up;
                 return;
             }
         }
         CubeMove lastMove = _moves.Last();
-        if (Mathf.RoundToInt(_cubes[lastMove.cubeIndex].gameObject.transform.position.y) == 0) {
-            _cubes[lastMove.cubeIndex].gameObject.transform.position += Vector3.up; 
+        if (Mathf.RoundToInt(_cubes[lastMove.cubeIndex].gameObject.transform.position.y) == 0)
+        {
+            _cubes[lastMove.cubeIndex].gameObject.transform.position += Vector3.up;
         }
-        if (_cubes[lastMove.cubeIndex].MoveInDir(lastMove.direction * -1)) {
+        if (_cubes[lastMove.cubeIndex].MoveInDir(lastMove.direction * -1))
+        {
             _moves.Remove(lastMove);
             GameManager.instance.UpdateMovesText(_moves.Count());
         }
     }
 
-#endregion
+    #endregion
 
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{0895c4e8-edc4-48fc-81f8-dc9bf2770ad2}">
+		<property name="name">
+			<value>Mode</value>
+		</property>
+		<relationship name="folder">
+			<destination>{14d03869-7f82-4aa7-ae29-69feb5aa9f35}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{49608b4d-83ac-4987-aaa3-5d0303e3009e}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{49608b4d-83ac-4987-aaa3-5d0303e3009e}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>EditMode</value>
+			<value>VideoMode</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

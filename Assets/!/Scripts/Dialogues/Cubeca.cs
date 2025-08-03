@@ -12,7 +12,8 @@ public class Cubeca : MonoBehaviour
     public UnityEvent dialogueFinishedEvent;
 
     [Serializable]
-    public struct DialogueSequence {
+    public struct DialogueSequence
+    {
         [Multiline]
         public List<string> dialogues;
         public int fontSize;
@@ -45,7 +46,8 @@ public class Cubeca : MonoBehaviour
 
     private float _goNextTimer = 0;
 
-    private void Start() {
+    private void Start()
+    {
         // StartCoroutine(blink());
         // StartCoroutine(talk());
         // StartCoroutine(drink());
@@ -53,10 +55,12 @@ public class Cubeca : MonoBehaviour
         // StartCoroutine(goNextLoop());
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         _goNextTimer += Time.deltaTime;
 
-        if (_goNextTimer >= 0.3f) {
+        if (_goNextTimer >= 0.3f)
+        {
             _goNextTimer = 0;
             _animator.SetTrigger(_goNextHash);
             _animator.SetInteger(_currentIdleHash, UnityEngine.Random.Range(0, 16));
@@ -70,8 +74,10 @@ public class Cubeca : MonoBehaviour
         _bubbleTextFront.text = string.Empty;
         _bubbleTextBack.text = string.Empty;
 
-        _bgRect.DOScaleY(1f, 0.3f).OnComplete(() => {
-            _bubbleRect.DOScaleY(1, 0.3f).SetEase(Ease.OutBack).OnComplete(() => {
+        _bgRect.DOScaleY(1f, 0.3f).OnComplete(() =>
+        {
+            _bubbleRect.DOScaleY(1, 0.3f).SetEase(Ease.OutBack).OnComplete(() =>
+            {
                 _goalString = _sequences[index].dialogues[_dialogueIndex];
                 _dialogueIndex++;
                 StartCoroutine(animateText());
@@ -89,7 +95,8 @@ public class Cubeca : MonoBehaviour
             GameManager.instance.DialogueComplete();
             return;
         }
-        if (_isTalking) {
+        if (_isTalking)
+        {
             StopCoroutine(animateText());
             _isTalking = false;
             _goalString = _goalString[1..];
@@ -103,30 +110,36 @@ public class Cubeca : MonoBehaviour
     }
 
 
-    public void OnCubicaClick() {
-        if (_bgRect.localScale.y == 0) {
+    public void OnCubicaClick()
+    {
+        if (_bgRect.localScale.y == 0)
+        {
             GameManager.instance.ShowDialogue();
             _cubicaRect.DOKill();
-            _cubicaRect.DOScale(0.95f, 0.1f).SetEase(Ease.OutBack).OnComplete(() => {
+            _cubicaRect.DOScale(0.95f, 0.1f).SetEase(Ease.OutBack).OnComplete(() =>
+            {
                 _cubicaRect.DOScale(1f, 0.1f).SetEase(Ease.OutBack);
             });
         }
     }
 
 
-    public void OnCubicaPointerEnter() {
+    public void OnCubicaPointerEnter()
+    {
         _cubicaRect.DOKill();
         _cubicaRect.DOScale(1.05f, 0.1f).SetEase(Ease.InOutSine);
     }
 
 
-    public void OnCubicaPointerExit() {
+    public void OnCubicaPointerExit()
+    {
         _cubicaRect.DOKill();
         _cubicaRect.DOScale(1, 0.1f).SetEase(Ease.InOutSine);
     }
 
 
-    private IEnumerator animateText() {
+    private IEnumerator animateText()
+    {
         _isTalking = true;
         _bubbleRect.anchoredPosition = new Vector3(-250, -150, 0);
         yield return new WaitForSeconds(0.1f);
@@ -136,14 +149,16 @@ public class Cubeca : MonoBehaviour
         _bubbleTextFront.text = string.Empty;
         _bubbleTextBack.text = string.Empty;
         yield return new WaitForSeconds(0.1f);
-        
+
         _bubbleRect.anchoredPosition = new Vector3(-250, -150, 0);
 
 
-        foreach (char letter in _goalString.ToCharArray()) {
+        foreach (char letter in _goalString.ToCharArray())
+        {
             if (!_isTalking) break;
 
-            if (char.IsDigit(letter)) {
+            if (char.IsDigit(letter))
+            {
                 playAnimation(int.Parse("" + letter));
                 continue;
             }
@@ -152,18 +167,21 @@ public class Cubeca : MonoBehaviour
             _bubbleTextBack.text += letter;
 
             float _letterInterval;
-            if (letter == ' ') {
+            if (letter == ' ')
+            {
                 _letterInterval = 0.05f;
-                
+
             }
-            else if (letter == '.' || letter == ',' || letter == ';' || letter == ':') {
+            else if (letter == '.' || letter == ',' || letter == ';' || letter == ':')
+            {
                 _letterInterval = 0.2f;
             }
             // else if (letter == '\n') {
             //     _letterInterval = 0.3f;
             // }
-            else {
-                // AudioManager.Instance.PlayLetterSound(FMODEvents.Instance.TalkingSounds, letter, this.transform.position);
+            else
+            {
+                AudioManager.Instance.PlayLetterSound(FMODEvents.Instance.TalkingSounds, letter, this.transform.position);
                 _letterInterval = Mathf.Clamp(_talkSpeed / _goalString.Length, 0.02f, 0.04f);
             }
 
@@ -180,7 +198,8 @@ public class Cubeca : MonoBehaviour
     }
 
 
-    private IEnumerator ayNoWay() {
+    private IEnumerator ayNoWay()
+    {
         yield return new WaitForSeconds(2);
 
         _animator.SetTrigger("goNext");
@@ -198,14 +217,16 @@ public class Cubeca : MonoBehaviour
         // _animator.SetTrigger("goNext");
     }
 
-    private IEnumerator helloCutscene(float delay = 2f) {
+    private IEnumerator helloCutscene(float delay = 2f)
+    {
         Debug.Log(delay);
         yield return new WaitForSeconds(3f);
         _animator.SetInteger("animationIndex", 1);
         _animator.SetTrigger("playAnimation");
         yield return new WaitForSeconds(1f);
-        
-        for (int i = 0; i < 34; i++) {
+
+        for (int i = 0; i < 34; i++)
+        {
             _animator.SetTrigger("goNext");
             yield return new WaitForSeconds(delay);
         }
@@ -215,5 +236,5 @@ public class Cubeca : MonoBehaviour
         yield return helloCutscene(delay + 0.01f);
     }
 
-    
+
 }
