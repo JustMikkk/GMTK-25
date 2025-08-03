@@ -96,6 +96,15 @@ public class LevelManager : MonoBehaviour
         _currentCube = _cubes[_currentCubeIndex];
         _currentCube.Select(true);
 
+        EventBus.destroyingLevelEvent.AddListener(() => {
+            StopAllCoroutines();
+            _isZooming = false;
+
+            foreach (CubesHolder ch in _cubesHolders) {
+            // ch.ResetCubesPositions();
+                ch.transform.DOKill();
+            };
+        });
     }
 
 

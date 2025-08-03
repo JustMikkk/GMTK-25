@@ -164,6 +164,11 @@ public class GameManager : MonoBehaviour
         _nextLvlBtnCanvasGroup.DOKill();
         _nextLvlBtnCanvasGroup.interactable = true;
         _nextLvlBtnCanvasGroup.DOFade(1, 0.3f);
+        EventBus.levelUnlockedEvent?.Invoke();
+    }
+
+    public bool IsLevelUnlocked(int index) {
+        return _levels[index].isUnlocked;
     }
 
 

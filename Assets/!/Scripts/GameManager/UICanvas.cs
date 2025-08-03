@@ -61,6 +61,7 @@ public class UICanvas : MonoBehaviour
     }
 
     private void onDialogueFinished() {
+        if (GameManager.instance.currentLevel != null) return;
         _isStartPanel = false;
         updateStartMenu();
         _leftPanel.DOAnchorPosX(0, 0.7f).SetEase(Ease.InOutCirc);
