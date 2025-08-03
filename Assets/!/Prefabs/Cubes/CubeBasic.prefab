@@ -192,7 +192,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &939278447630427697
 GameObject:
@@ -300,7 +300,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &975663994458989996
 GameObject:
@@ -408,7 +408,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1031729775364765625
 GameObject:
@@ -550,7 +550,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2349674069046117422
 GameObject:
@@ -561,9 +561,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7507036046273118544}
-  - component: {fileID: 7714552743176134691}
   - component: {fileID: 2918294801252547318}
-  - component: {fileID: 7338744402834556870}
   - component: {fileID: 4184712092479588743}
   m_Layer: 0
   m_Name: CubeBasic
@@ -589,27 +587,6 @@ Transform:
   - {fileID: 741691287083600656}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7714552743176134691
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2349674069046117422}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2918294801252547318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,39 +607,16 @@ MonoBehaviour:
   _isMonitoring: 0
   _moveDir: {x: 0, y: 0, z: 0}
   _raycastOrigins:
-  - {x: 0, y: -0.45, z: 0}
-  - {x: 0.4, y: -0.45, z: 0.4}
-  - {x: 0.4, y: -0.45, z: -0.4}
-  - {x: -0.4, y: -0.45, z: -0.4}
-  - {x: -0.4, y: -0.45, z: 0.4}
-  _raycastLenght: 0.1
---- !u!54 &7338744402834556870
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2349674069046117422}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 122
-  m_CollisionDetection: 0
+  - {x: 0, y: -0.5, z: 0}
+  - {x: 0.4, y: -0.5, z: 0.4}
+  - {x: 0.4, y: -0.5, z: -0.4}
+  - {x: -0.4, y: -0.5, z: -0.4}
+  - {x: -0.4, y: -0.5, z: 0.4}
+  - {x: -0.2, y: -0.5, z: 0}
+  - {x: 0.2, y: -0.5, z: 0}
+  - {x: 0, y: -0.5, z: -0.2}
+  - {x: 0, y: -0.5, z: 0.2}
+  _raycastLenght: 0.5
 --- !u!82 &4184712092479588743
 AudioSource:
   m_ObjectHideFlags: 0
@@ -866,7 +820,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4241784062586540532
 GameObject:
@@ -974,7 +928,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4494724451287751188
 GameObject:
@@ -1082,7 +1036,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4761389052690918169
 GameObject:
@@ -1190,7 +1144,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5101572086592809239
 GameObject:
@@ -1384,7 +1338,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6371454344594736986
 GameObject:
@@ -1492,7 +1446,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6435681337032406991
 GameObject:
@@ -1697,9 +1651,9 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7812226802470092611
 GameObject:
@@ -1893,7 +1847,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8686598613995527904
 GameObject:
@@ -2001,5 +1955,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.999, y: 0.999, z: 0.999}
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

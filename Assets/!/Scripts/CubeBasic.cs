@@ -21,6 +21,7 @@ public class CubeBasic : MonoBehaviour
     private float _initialDelay;
 
     private bool _isMoving = false;
+    private bool _isStatic = true;
 
     private Rigidbody _rigidBody;
     private Transform _transform;
@@ -35,16 +36,21 @@ public class CubeBasic : MonoBehaviour
     
 
     private void Update() {
-        if (_rigidBody.isKinematic) return;
+        // if (_rigidBody.isKinematic) return;
+        if (_isStatic) return;
 
         if (!isGrounded()) {
-            _rigidBody.useGravity = true;
+            _isStatic = true;
+            _transform.DOLocalMoveY(Mathf.RoundToInt(_transform.position.y) -1, 0.2f).SetEase(Ease.Linear).OnComplete(() => {
+                if (isGrounded()) Debug.Log("landing!");
+                _isStatic = false;
+            });
 
-            if (transform.position.y < -10) {
+            if (_transform.position.y < -10) {
                 GameManager.instance.ResetLevel();
             }
         } else {
-            _rigidBody.useGravity = false;
+            _isStatic = true;
         }
     }
 
@@ -60,7 +66,8 @@ public class CubeBasic : MonoBehaviour
 
 
     public void MakeKinematic(bool isKinematic) {
-        _rigidBody.isKinematic = isKinematic;
+        // _rigidBody.isKinematic = isKinematic;
+        _isStatic = isKinematic;
     }
 
 
@@ -77,7 +84,8 @@ public class CubeBasic : MonoBehaviour
 
         if (!canMoveInDir(dir)) {
             _isMoving = true;
-            _rigidBody.isKinematic = true;
+            // _rigidBody.isKinematic = true;
+            _isStatic = true;
 
             Vector3 rotationAxis2 = Vector3.zero;
             if (dir.x != 0) {
@@ -92,7 +100,9 @@ public class CubeBasic : MonoBehaviour
                 _transform.DOMove(new Vector3(_transform.position.x + dir.x * 0.2f, _transform.position.y, _transform.position.z + dir.y * 0.2f), speed / 3).OnComplete(() => {
                     _transform.position = Vector3Int.RoundToInt(_transform.position);
                     _isMoving = false;
-                    _rigidBody.isKinematic = false;
+                    // _rigidBody.isKinematic = false;
+                    _isStatic = false;
+
                 });
             });
 
@@ -106,7 +116,8 @@ public class CubeBasic : MonoBehaviour
         _audioSource.DOPlay();
 
         _isMoving = true;
-        _rigidBody.isKinematic = true;
+        // _rigidBody.isKinematic = true;
+        _isStatic = true;
 
         Vector3 rotationAxis = Vector3.zero;
         if (dir.x != 0) {
@@ -119,7 +130,8 @@ public class CubeBasic : MonoBehaviour
         _transform.DOMove(new Vector3(_transform.position.x - dir.x, _transform.position.y, _transform.position.z - dir.y), speed).OnComplete(() => {
             _transform.position = Vector3Int.RoundToInt(_transform.position);
             _isMoving = false;
-            _rigidBody.isKinematic = false;
+            // _rigidBody.isKinematic = false;
+            _isStatic = false;
         });
 
         return true;

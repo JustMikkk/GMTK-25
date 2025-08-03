@@ -253,11 +253,9 @@ public class LevelManager : MonoBehaviour
 
         int index = 0;
         foreach (CubesHolder ch in _cubesHolders) {
-            ch.ResetCubesPositions();
+            // ch.ResetCubesPositions();
             ch.transform.DOMove(_nextPositions[index], 2);
-            ch.transform.DOScale(ch.transform.localScale * _zoomAmount, 2).OnComplete(() => {
-                ch.ResetCubesPositions();
-            });
+            ch.transform.DOScale(ch.transform.localScale * _zoomAmount, 2);
             index++;
         }
 
