@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [Serializable]
-    private struct LevelData {
+    private struct LevelData
+    {
         public int levelIndex;
         public GameObject prefab;
         public bool isUnlocked;
@@ -35,10 +36,14 @@ public class GameManager : MonoBehaviour
     private bool _isReseting = false;
 
 
-    private void Awake()  {
-        if(instance == null) {
+    private void Awake()
+    {
+        if (instance == null)
+        {
             instance = this;
-        } else {
+        }
+        else
+        {
             Destroy(gameObject);
         }
 
@@ -46,37 +51,42 @@ public class GameManager : MonoBehaviour
     }
 
 
-#region Level Handling
+    #region Level Handling
 
-    public void SpawnNextLevel() {
+    public void SpawnNextLevel()
+    {
         SpawnLevel(_currentLevelIndex + 1);
     }
 
 
-    public void SpawnLevel(int index) {
+    public void SpawnLevel(int index)
+    {
         spawnLevel(index, false);
     }
 
 
-    public void ResetLevel() {
+    public void ResetLevel()
+    {
         if (_isReseting) return;
         _isReseting = true;
-        
+
         spawnLevel(_currentLevelIndex, true);
     }
 
 
-    private void spawnLevel(int index, bool isReset) {
+    private void spawnLevel(int index, bool isReset)
+    {
         // StopAllCoroutines();
         // DOTween.KillAll();
 
-        
+        AudioManager.Instance.PlayOneShot(FMODEvents.Instance.OpenLevelSound, this.transform.position);
         float delay = 0.3f;
-        if (currentLevel != null) {
+        if (currentLevel != null)
+        {
             despawnLevel(isReset);
             delay = 1f;
         }
-        
+
         currentLevel = Instantiate(_levels[index].prefab).GetComponent<LevelManager>();
 
         if (isReset) currentLevel.AppearReset(delay);
@@ -85,51 +95,63 @@ public class GameManager : MonoBehaviour
         EventBus.levelStartedEvent?.Invoke();
         UpdateMovesText(0);
         UpdateCubeText(1);
-        
+
         currentLevel.levelReadyEvent.AddListener(onLevelReady);
 
         _currentLevelIndex = index;
-        
+
         _nextLvlBtnCanvasGroup.DOKill();
-        if (isNextLvlUnlocked()) {
+        if (isNextLvlUnlocked())
+        {
             _nextLvlBtnCanvasGroup.interactable = true;
             _nextLvlBtnCanvasGroup.DOFade(1, 0.3f);
-        } else {
+        }
+        else
+        {
             _nextLvlBtnCanvasGroup.interactable = false;
             _nextLvlBtnCanvasGroup.DOFade(0, 0.3f);
         }
     }
 
 
-    private void despawnLevel(bool isReset) {
+    private void despawnLevel(bool isReset)
+    {
         EventBus.destroyingLevelEvent?.Invoke();
         SetTransitionCamera(true);
         currentLevel.levelReadyEvent.RemoveListener(onLevelReady);
 
-        if (isReset) currentLevel.DisappearReset(); 
+        if (isReset) currentLevel.DisappearReset();
         else currentLevel.DisappearNormal();
     }
 
 
-    private void onLevelReady() {
+    private void onLevelReady()
+    {
         SetTransitionCamera(false);
         _isReseting = false;
         currentLevel.SwitchCamera(false);
-        if (!_levels[_currentLevelIndex].wasCutscenePlayed) {
+        if (!_levels[_currentLevelIndex].wasCutscenePlayed)
+        {
             ShowDialogue(_levels[_currentLevelIndex].levelIndex);
         }
     }
 
 
-#endregion
+    #endregion
 
-    public void ShowDialogue(int index = -1) {
-        if (index == -1) index = _currentLevelIndex;
+    public void ShowDialogue(int index = -1)
+    {
+        if (index == -1)
+        {
+            index = _currentLevelIndex;
+        }
+        AudioManager.Instance.PlayOneShot(FMODEvents.Instance.UIClickSound, this.transform.position);
         _cubica.ShowDialogue(index);
     }
 
 
-    public void DialogueComplete() {
+    public void DialogueComplete()
+    {
         if (_currentLevelIndex >= _levels.Count) return;
 
         LevelData level = _levels[_currentLevelIndex];
@@ -138,23 +160,27 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void SetTransitionCamera(bool setCamera) {
+    public void SetTransitionCamera(bool setCamera)
+    {
         if (setCamera && _transitionCamera.Priority == 100) return;
         _transitionCamera.Priority = setCamera ? 100 : 10;
     }
 
 
-    public void UpdateMovesText(int count) {
+    public void UpdateMovesText(int count)
+    {
         _movesText.text = "Moves: " + count;
     }
 
 
-    public void UpdateCubeText(int index) {
+    public void UpdateCubeText(int index)
+    {
         _cubeIndexText.text = "Cube #" + index;
     }
 
 
-    public void UnlockNextLvl() {
+    public void UnlockNextLvl()
+    {
         if (_currentLevelIndex + 1 == _levels.Count) return;
         var nextLevel = _levels[_currentLevelIndex + 1];
         nextLevel.isUnlocked = true;
@@ -167,12 +193,14 @@ public class GameManager : MonoBehaviour
         EventBus.levelUnlockedEvent?.Invoke();
     }
 
-    public bool IsLevelUnlocked(int index) {
+    public bool IsLevelUnlocked(int index)
+    {
         return _levels[index].isUnlocked;
     }
 
 
-    private bool isNextLvlUnlocked() {
+    private bool isNextLvlUnlocked()
+    {
         if (_currentLevelIndex + 1 == _levels.Count) return false;
         return _levels[_currentLevelIndex + 1].isUnlocked;
     }

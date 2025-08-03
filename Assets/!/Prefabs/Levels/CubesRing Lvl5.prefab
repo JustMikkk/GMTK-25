@@ -103,22 +103,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3433879045967994235, guid: 63b18362a0eea1d33ac25776c4656b51, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3832347403347005650, guid: 63b18362a0eea1d33ac25776c4656b51, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1334628295733040641}
   m_SourcePrefab: {fileID: 100100000, guid: 63b18362a0eea1d33ac25776c4656b51, type: 3}
 --- !u!114 &3521761285002738137 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4452756137608326666, guid: 63b18362a0eea1d33ac25776c4656b51, type: 3}
   m_PrefabInstance: {fileID: 942537819888949203}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4052019824761079553}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89e0e309fdf4459c4b7c78d6b03dda20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4052019824761079553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3832347403347005650, guid: 63b18362a0eea1d33ac25776c4656b51, type: 3}
+  m_PrefabInstance: {fileID: 942537819888949203}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-1334628295733040641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4052019824761079553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!4 &8110502513932812927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9050786334825436588, guid: 63b18362a0eea1d33ac25776c4656b51, type: 3}
@@ -188,22 +228,62 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 4629b38bb77953d0aaedc949bc8635f2, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4184712092479588743, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2623577203237264047}
   m_SourcePrefab: {fileID: 100100000, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
 --- !u!114 &3484400090738213793 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2918294801252547318, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
   m_PrefabInstance: {fileID: 1739742693745801559}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4089117686594567545}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89e0e309fdf4459c4b7c78d6b03dda20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &4089117686594567545 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2349674069046117422, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
+  m_PrefabInstance: {fileID: 1739742693745801559}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2623577203237264047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4089117686594567545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: -1
+  OverrideMaxDistance: -1
 --- !u!4 &8073431590587676679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7507036046273118544, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
@@ -273,7 +353,8 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 4629b38bb77953d0aaedc949bc8635f2, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4184712092479588743, guid: 2949d2dc51bba0a31a24a8f639416194, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
