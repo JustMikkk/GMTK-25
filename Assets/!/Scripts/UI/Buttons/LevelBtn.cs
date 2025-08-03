@@ -7,6 +7,7 @@ public class LevelBtn : MonoBehaviour
 {
     [SerializeField] private int _index;
     [SerializeField] private TextMeshProUGUI _text;
+    [SerializeField] private GameObject _star;
     
     private RawImage _rawImg;
     private RectTransform _rectTransform;
@@ -22,12 +23,12 @@ public class LevelBtn : MonoBehaviour
     }
 
     private void Start() {
-        updateUI();
+        updateUI(99);
         EventBus.levelUnlockedEvent.AddListener(updateUI);
     }
 
 
-    private void updateUI() {
+    private void updateUI(int moves) {
         if (GameManager.instance.IsLevelUnlocked(_index)) {
             _rawImg.color = Color.white;
             _text.color = Color.white;
@@ -35,6 +36,11 @@ public class LevelBtn : MonoBehaviour
             _button.enabled = true;
             _eventTrigger.enabled = true;
             _rectTransform.localScale = Vector3.one;
+
+            if (moves < GameManager.instance.GetMinimumMoves(_index)) {
+                _star.SetActive(true);
+            }
+
         } else {
             _rawImg.color = Color.gray;
             _text.color = Color.gray;

@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void UnlockNextLvl() {
+    public void UnlockNextLvl(int moves) {
         if (_currentLevelIndex + 1 == _levels.Count) return;
         var nextLevel = _levels[_currentLevelIndex + 1];
         nextLevel.isUnlocked = true;
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
         _nextLvlBtnCanvasGroup.DOKill();
         _nextLvlBtnCanvasGroup.interactable = true;
         _nextLvlBtnCanvasGroup.DOFade(1, 0.3f);
-        EventBus.levelUnlockedEvent?.Invoke();
+        EventBus.levelUnlockedEvent?.Invoke(moves);
     }
 
     public bool IsLevelUnlocked(int index) {
@@ -177,4 +177,7 @@ public class GameManager : MonoBehaviour
         return _levels[_currentLevelIndex + 1].isUnlocked;
     }
 
+    public int GetMinimumMoves(int index) {
+        return _levels[index].minimumMoves;
+    }
 }
