@@ -5559,18 +5559,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sequences:
   - dialogues:
-    - "Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
-    - "You must be \nthe new trainee\nworking here. "
-    - 'That makes me
+    - "1Hi!, Welcome   \nto the Company!\n....(click anywhere \nto continue)"
+    - "3You must be \nthe new trainee\nworking here. "
+    - '2That makes me
 
       ... YOUR BOSS!,
 
       You can call me
 
       Cubica'
-    - "Say, have you ever\n seen one of those \nmind bending videos \nthat go on
+    - "4Say, have you ever\n seen one of those \nmind bending videos \nthat go on
       forever?"
-    - 'Well, now YOU
+    - '5Well, now YOU
 
       will be making them!'
     fontSize: 30

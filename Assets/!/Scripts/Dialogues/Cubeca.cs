@@ -26,17 +26,35 @@ public class Cubeca : MonoBehaviour
     [SerializeField] private RectTransform _bgRect;
 
 
+    private int _goNextHash = Animator.StringToHash("goNext");
+    private int _animationIndexHash = Animator.StringToHash("animationIndex");
+    private int _playAnimationHash = Animator.StringToHash("playAnimation");
+
+
+
     private bool _isTalking = false;
     private string _goalString;
     private int _dialogueIndex = 0;
+
+    private float _goNextTimer = 0;
 
     private void Start() {
         // StartCoroutine(blink());
         // StartCoroutine(talk());
         // StartCoroutine(drink());
-        StartCoroutine(helloCutscene());
-
+        // StartCoroutine(helloCutscene());
+        // StartCoroutine(goNextLoop());
     }
+
+    private void FixedUpdate() {
+        _goNextTimer += Time.deltaTime;
+
+        if (_goNextTimer >= 0.3f) {
+            _goNextTimer = 0;
+            _animator.SetTrigger(_goNextHash);
+        }
+    }
+
 
     public void ShowDialogue(int index) {
         _dialogueIndex = 0;
@@ -88,6 +106,12 @@ public class Cubeca : MonoBehaviour
 
 
         foreach (char letter in _goalString.ToCharArray()) {
+
+            if (char.IsDigit(letter)) {
+                playAnimation(int.Parse("" + letter));
+                continue;
+            }
+
             _bubbleTextFront.text += letter;
             _bubbleTextBack.text += letter;
 
@@ -112,6 +136,14 @@ public class Cubeca : MonoBehaviour
         _isTalking = false;
     }
 
+    private void playAnimation(int index) {
+        Debug.Log(index);
+        _goNextTimer = 0f;
+        _animator.SetBool(_goNextHash, false);
+        _animator.SetInteger(_animationIndexHash, index);
+        _animator.SetTrigger(_playAnimationHash);
+    }
+
 
     private IEnumerator ayNoWay() {
         yield return new WaitForSeconds(2);
@@ -131,7 +163,7 @@ public class Cubeca : MonoBehaviour
         // _animator.SetTrigger("goNext");
     }
 
-    private IEnumerator helloCutscene(float delay = 0.3f) {
+    private IEnumerator helloCutscene(float delay = 2f) {
         Debug.Log(delay);
         yield return new WaitForSeconds(3f);
         _animator.SetInteger("animationIndex", 1);
