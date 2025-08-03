@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _movesText;
     [SerializeField] private TextMeshProUGUI _cubeIndexText;
     [SerializeField] private CanvasGroup _nextLvlBtnCanvasGroup;
+    [SerializeField] private Cubeca _cubica;
 
     private bool _isReseting = false;
 
@@ -114,10 +115,24 @@ public class GameManager : MonoBehaviour
         SetTransitionCamera(false);
         _isReseting = false;
         currentLevel.SwitchCamera(false);
+        if (!_levels[_currentLevelIndex].wasCutscenePlayed) {
+            ShowDialogue(_levels[_currentLevelIndex].levelIndex);
+        }
     }
 
 
 #endregion
+    public void ShowDialogue(int index) {
+        _cubica.ShowDialogue(index);
+    }
+
+
+    public void DialogueComplete() {
+        LevelData level = _levels[_currentLevelIndex];
+        level.wasCutscenePlayed = true;
+        _levels[_currentLevelIndex] = level;
+    }
+
 
     public void SetTransitionCamera(bool setCamera) {
         if (setCamera && _transitionCamera.Priority == 100) return;

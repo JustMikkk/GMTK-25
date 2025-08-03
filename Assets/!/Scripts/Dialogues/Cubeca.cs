@@ -1,23 +1,34 @@
 using System.Collections;
 using UnityEngine;
-using DG.Tweening;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+using System;
+using TMPro;
+using DG.Tweening;
 
 
 public class Cubeca : MonoBehaviour
 {
-    [SerializeField] private Transform _leftEye, _rightEye;
-    [SerializeField] private Transform _mouth;
-    [SerializeField] private Transform _leftElbow;
-    [SerializeField] private List<Vector3> _drinkRotations;
-
-    private Animator _animator;
-
-    private void Awake() {
-        _animator = GetComponent<Animator>();
+    [Serializable]
+    public struct DialogueSequence {
+        [Multiline]
+        public List<string> dialogues;
+        public int fontSize;
     }
 
+    [SerializeField] private List<DialogueSequence> _sequences;
+    [SerializeField] private float _talkSpeed = 0.2f;
+
+    [SerializeField] private Animator _animator;
+    [SerializeField] private RectTransform _bubbleRect;
+    [SerializeField] private TextMeshProUGUI _bubbleTextFront;
+    [SerializeField] private TextMeshProUGUI _bubbleTextBack;
+
+    [SerializeField] private RectTransform _bgRect;
+
+
+    private bool _isTalking = false;
+    private string _goalString;
+    private int _dialogueIndex = 0;
 
     private void Start() {
         // StartCoroutine(blink());
@@ -26,6 +37,81 @@ public class Cubeca : MonoBehaviour
         StartCoroutine(helloCutscene());
 
     }
+
+    public void ShowDialogue(int index) {
+        _dialogueIndex = 0;
+        _bubbleTextFront.text = string.Empty;
+        _bubbleTextBack.text = string.Empty;
+
+        _bgRect.DOScaleY(1f, 0.3f).OnComplete(() => {
+            _bubbleRect.DOScaleY(1, 0.3f).SetEase(Ease.OutBack).OnComplete(() => {
+                _goalString = _sequences[index].dialogues[_dialogueIndex];
+                _dialogueIndex++;
+                StartCoroutine(animateText());
+            });
+        });
+    }
+
+
+    public void OnClick() {
+        if (_dialogueIndex == _sequences[0].dialogues.Count) {
+            _bubbleRect.DOScaleY(0, 0.3f);
+            _bgRect.DOScaleY(0f, 0.3f).SetDelay(0.3f);
+            GameManager.instance.DialogueComplete();
+            return;
+        }
+        if (_isTalking) {
+            StopCoroutine(animateText());
+            _bubbleTextFront.text = _goalString;
+            _bubbleTextBack.text = _goalString;
+            _isTalking = false;
+        } else {
+            _goalString = _sequences[0].dialogues[_dialogueIndex];
+            _dialogueIndex++;
+            StartCoroutine(animateText());
+        }
+    }
+
+
+    private IEnumerator animateText() {
+        _isTalking = true;
+        _bubbleRect.anchoredPosition = new Vector3(-250, -150, 0);
+        yield return new WaitForSeconds(0.1f);
+
+        _bubbleRect.anchoredPosition = new Vector3(-250, -140, 0);
+
+        _bubbleTextFront.text = string.Empty;
+        _bubbleTextBack.text = string.Empty;
+        yield return new WaitForSeconds(0.1f);
+        
+        _bubbleRect.anchoredPosition = new Vector3(-250, -150, 0);
+
+
+        foreach (char letter in _goalString.ToCharArray()) {
+            _bubbleTextFront.text += letter;
+            _bubbleTextBack.text += letter;
+
+            float _letterInterval;
+            if (letter == ' ') {
+                _letterInterval = 0.05f;
+                
+            }
+            else if (letter == '.' || letter == ',' || letter == ';' || letter == ':') {
+                _letterInterval = 0.2f;
+            }
+            // else if (letter == '\n') {
+            //     _letterInterval = 0.3f;
+            // }
+            else {
+                // AudioManager.Instance.PlayLetterSound(FMODEvents.Instance.TalkingSounds, letter, this.transform.position);
+                _letterInterval = Mathf.Clamp(_talkSpeed / _goalString.Length, 0.02f, 0.04f);
+            }
+
+            yield return new WaitForSeconds(_letterInterval);
+        }
+        _isTalking = false;
+    }
+
 
     private IEnumerator ayNoWay() {
         yield return new WaitForSeconds(2);
@@ -60,89 +146,6 @@ public class Cubeca : MonoBehaviour
         yield return new WaitForSeconds(10f);
 
         yield return helloCutscene(delay + 0.01f);
-    }
-
-    private IEnumerator blink() {
-
-        // _rightEye.DOKill();
-        // _rightEye.DOScaleY(0, 0.4f).SetEase(Ease.InOutSine).SetDelay(0.1f).OnComplete(() => {
-        //     _rightEye.DOScaleY(0.3f, 0.4f).SetEase(Ease.InOutSine).SetDelay(0.1f);
-        // });
-
-        // _leftEye.DOKill();
-        // _leftEye.DOScaleY(0, 0.5f).SetEase(Ease.InOutSine).OnComplete(() => {
-        //     _leftEye.DOScaleY(0.3f, 0.5f).SetEase(Ease.InOutSine);
-        // });
-
-        _leftEye.localScale = new Vector3(_leftEye.localScale.x, 0.15f, _leftEye.localScale.z);
-        _rightEye.localScale = new Vector3(_rightEye.localScale.x, 0.15f, _rightEye.localScale.z);
-        yield return new WaitForSeconds(0.05f);
-
-        _leftEye.localScale = new Vector3(_leftEye.localScale.x, 0f, _leftEye.localScale.z);
-        _rightEye.localScale = new Vector3(_rightEye.localScale.x, 0f, _rightEye.localScale.z);
-        yield return new WaitForSeconds(0.1f);
-        
-        _leftEye.localScale = new Vector3(_leftEye.localScale.x, 0.15f, _leftEye.localScale.z);
-        _rightEye.localScale = new Vector3(_rightEye.localScale.x, 0.15f, _rightEye.localScale.z);
-        yield return new WaitForSeconds(0.05f);
-
-
-        _leftEye.localScale = new Vector3(_leftEye.localScale.x, 0.3f, _leftEye.localScale.z);
-        _rightEye.localScale = new Vector3(_rightEye.localScale.x, 0.3f, _rightEye.localScale.z);
-        yield return new WaitForSeconds(Random.Range(3, 5));
-
-        yield return blink();
-    }
-
-
-    private IEnumerator drink() {
-
-        _leftElbow.localRotation = Quaternion.Euler(_drinkRotations[1]);
-        yield return new WaitForSeconds(0.1f);
-
-        _leftElbow.localRotation = Quaternion.Euler(_drinkRotations[2]);
-        yield return new WaitForSeconds(2f);
-
-        _leftElbow.localRotation = Quaternion.Euler(_drinkRotations[1]);
-        yield return new WaitForSeconds(0.1f);
-
-        _leftElbow.localRotation = Quaternion.Euler(_drinkRotations[0]);
-        yield return new WaitForSeconds(0.1f);
-
-
-        yield return new WaitForSeconds(Random.Range(7, 15));
-
-        yield return drink();
-    }
-
-
-
-    private IEnumerator talk() {
-
-        _mouth.DOLocalMoveX(0, 0.3f).OnComplete(() => {
-            _mouth.DOScaleX(2, 0.3f);
-        });
-
-
-        yield return new WaitForSeconds(0.7f);
-
-        for (int i = 0; i < 3; i++) {
-            _mouth.DOScaleY(2, 0.2f).OnComplete(() => {
-                _mouth.DOScaleY(0.72f, 0.1f).SetDelay(0.2f);
-            });
-
-            yield return new WaitForSeconds(1f);
-        }
-
-        _mouth.DOScaleX(0.67f, 0.3f).OnComplete(() => {
-            _mouth.DOLocalMoveX(-0.2f, 0.3f);
-        });
-
-
-
-        yield return new WaitForSeconds(5);
-
-        yield return talk();
     }
 
     
