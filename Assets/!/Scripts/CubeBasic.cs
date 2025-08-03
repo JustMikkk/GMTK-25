@@ -38,10 +38,14 @@ public class CubeBasic : MonoBehaviour
         if (_rigidBody.isKinematic) return;
 
         if (!isGrounded()) {
+            _rigidBody.useGravity = true;
+
             if (transform.position.y < -10) {
                 GameManager.instance.ResetLevel();
             }
-        } 
+        } else {
+            _rigidBody.useGravity = false;
+        }
     }
 
 
@@ -56,7 +60,6 @@ public class CubeBasic : MonoBehaviour
 
 
     public void MakeKinematic(bool isKinematic) {
-        _rigidBody.useGravity = !isKinematic;
         _rigidBody.isKinematic = isKinematic;
     }
 
@@ -74,7 +77,7 @@ public class CubeBasic : MonoBehaviour
 
         if (!canMoveInDir(dir)) {
             _isMoving = true;
-            _rigidBody.useGravity = false;
+            _rigidBody.isKinematic = true;
 
             Vector3 rotationAxis2 = Vector3.zero;
             if (dir.x != 0) {
@@ -89,7 +92,7 @@ public class CubeBasic : MonoBehaviour
                 _transform.DOMove(new Vector3(_transform.position.x + dir.x * 0.2f, _transform.position.y, _transform.position.z + dir.y * 0.2f), speed / 3).OnComplete(() => {
                     _transform.position = Vector3Int.RoundToInt(_transform.position);
                     _isMoving = false;
-                    _rigidBody.useGravity = true;
+                    _rigidBody.isKinematic = false;
                 });
             });
 
@@ -103,7 +106,7 @@ public class CubeBasic : MonoBehaviour
         _audioSource.DOPlay();
 
         _isMoving = true;
-        _rigidBody.useGravity = false;
+        _rigidBody.isKinematic = true;
 
         Vector3 rotationAxis = Vector3.zero;
         if (dir.x != 0) {
@@ -116,7 +119,7 @@ public class CubeBasic : MonoBehaviour
         _transform.DOMove(new Vector3(_transform.position.x - dir.x, _transform.position.y, _transform.position.z - dir.y), speed).OnComplete(() => {
             _transform.position = Vector3Int.RoundToInt(_transform.position);
             _isMoving = false;
-            _rigidBody.useGravity = true;
+            _rigidBody.isKinematic = false;
         });
 
         return true;
