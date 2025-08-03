@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.Events;
 
 
 public class Cubeca : MonoBehaviour
 {
+    public UnityEvent dialogueFinishedEvent;
+
     [Serializable]
     public struct DialogueSequence {
         [Multiline]
@@ -27,9 +30,11 @@ public class Cubeca : MonoBehaviour
     [SerializeField] private RectTransform _cubicaRect;
 
 
-    private int _goNextHash = Animator.StringToHash("goNext");
-    private int _animationIndexHash = Animator.StringToHash("animationIndex");
-    private int _playAnimationHash = Animator.StringToHash("playAnimation");
+    private readonly int _goNextHash = Animator.StringToHash("goNext");
+    private readonly int _animationIndexHash = Animator.StringToHash("animationIndex");
+    private readonly int _playAnimationHash = Animator.StringToHash("playAnimation");
+    private readonly int _currentIdleHash = Animator.StringToHash("currentIdle");
+
 
 
 
@@ -53,6 +58,7 @@ public class Cubeca : MonoBehaviour
         if (_goNextTimer >= 0.3f) {
             _goNextTimer = 0;
             _animator.SetTrigger(_goNextHash);
+            _animator.SetInteger(_currentIdleHash, UnityEngine.Random.Range(0, 8));
         }
     }
 
@@ -76,6 +82,7 @@ public class Cubeca : MonoBehaviour
         if (_dialogueIndex == _sequences[0].dialogues.Count) {
             _bubbleRect.DOScaleY(0, 0.3f);
             _bgRect.DOScaleY(0f, 0.3f).SetDelay(0.3f);
+            dialogueFinishedEvent?.Invoke();
             GameManager.instance.DialogueComplete();
             return;
         }
@@ -107,6 +114,7 @@ public class Cubeca : MonoBehaviour
         _cubicaRect.DOKill();
         _cubicaRect.DOScale(1.05f, 0.1f).SetEase(Ease.InOutSine);
     }
+
 
     public void OnCubicaPointerExit() {
         _cubicaRect.DOKill();

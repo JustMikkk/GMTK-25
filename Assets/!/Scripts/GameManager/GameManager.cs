@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("Levels")]
     public LevelManager currentLevel;
     [SerializeField] private List<LevelData> _levels;
-    private int _currentLevelIndex = 0;
+    private int _currentLevelIndex = 8;
 
 
     [Header("Other")]
@@ -124,12 +124,14 @@ public class GameManager : MonoBehaviour
 #endregion
 
     public void ShowDialogue(int index = -1) {
-        if (index == -1) index = _levels[_currentLevelIndex].levelIndex;
+        if (index == -1) index = _currentLevelIndex;
         _cubica.ShowDialogue(index);
     }
 
 
     public void DialogueComplete() {
+        if (_currentLevelIndex >= _levels.Count) return;
+        
         LevelData level = _levels[_currentLevelIndex];
         level.wasCutscenePlayed = true;
         _levels[_currentLevelIndex] = level;

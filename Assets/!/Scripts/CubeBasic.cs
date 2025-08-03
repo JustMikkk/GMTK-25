@@ -12,7 +12,6 @@ public class CubeBasic : MonoBehaviour
     [SerializeField] private GameObject _arrowGO;
     [SerializeField] private ParticleSystem _landParticles;
 
-    [SerializeField] private bool _isMonitoring = false;
     [SerializeField] private Vector3 _moveDir;
 
     [SerializeField] private List<Vector3> _raycastOrigins = new();
