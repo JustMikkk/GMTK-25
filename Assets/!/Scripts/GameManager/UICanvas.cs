@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UICanvas : MonoBehaviour
 {
     [SerializeField] private RectTransform _leftPanel, _startPanel, _rightPanel;
+    [SerializeField] private RectTransform _creditsRect;
     [SerializeField] private Cubeca _cubeca;
     [SerializeField] private Button _lvl1Btn;
     
@@ -38,6 +39,19 @@ public class UICanvas : MonoBehaviour
             _isStartPanel = !_isStartPanel;
             updateStartMenu();
         }
+    }
+
+
+    public void OnCreditsClick() {
+        _creditsRect.localScale = new Vector3(1, 0, 1);
+        _creditsRect.DOKill();
+        _creditsRect.DOScaleY(1, 0.3f).SetEase(Ease.OutBack);
+        _creditsRect.DOScaleY(0, 0.3f).SetDelay(8);
+    }
+
+    
+    public void OnExitClick() {
+        Application.Quit();
     }
 
 
